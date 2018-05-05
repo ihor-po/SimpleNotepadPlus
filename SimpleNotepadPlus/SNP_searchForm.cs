@@ -57,5 +57,11 @@ namespace SimpleNotepadPlus
 
             this.DialogResult = DialogResult.OK;
         }
+
+        //protected override void OnClosed(EventArgs e)
+        //{
+        //    this.DialogResult =  DialogResult.Cancel;
+
+        //}
     }
 }

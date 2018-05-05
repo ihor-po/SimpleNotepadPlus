@@ -19,6 +19,17 @@ namespace SimpleNotepadPlus
         const string LINE = "Строка: ";
         const string POSITION = "Позиция: ";
 
+        string[]  dictionary = {
+            "using", "namespace", "public", "private", "protected",
+            "partial", "class", "const",
+            "string", "int", "boole", "float", "double", "char",
+            "get", "set", "value",
+            "new", "object", "void", "var", "switch", "case", "default",
+            "break","true", "false",
+            "for", "if", "foreach", "in",  "as", "is",
+            "else", "this", "try", "catch", "throw", "override"
+        };
+
         RichTextBox virtualRtb;
 
         public te_form()
@@ -49,9 +60,9 @@ namespace SimpleNotepadPlus
 
             te_menu_saveAs.Click += Te_menu_saveAs_Click;
 
-            te_rtb_editor.TextChanged += Te_rtb_editor_TextChanged;
+            //te_rtb_editor.TextChanged += Te_rtb_editor_TextChanged;
 
-            te_rtb_editor.SelectionChanged += Te_rtb_editor_SelectionChanged;
+            //te_rtb_editor.SelectionChanged += Te_rtb_editor_SelectionChanged;
 
             te_menu_copy.Click += Te_menu_copy_Click;
             te_tsb_copy.Click += Te_menu_copy_Click;
@@ -105,50 +116,46 @@ namespace SimpleNotepadPlus
             te_menu_replace.Click += Te_menu_find_Click;
             te_tsb_replace.Click += Te_menu_find_Click;
 
+            te_menu_comment.Click += Te_menu_comment_Click;
+            te_tsb_comment.Click += Te_menu_comment_Click;
+
+            te_menu_uncomment.Click += Te_menu_uncomment_Click;
+            te_tsb_uncomment.Click += Te_menu_uncomment_Click;
+
             this.WindowState = FormWindowState.Maximized;
            
         }
 
-        private void Te_menu_find_Click(object sender, EventArgs e)
+        private void Te_menu_uncomment_Click(object sender, EventArgs e)
         {
-            string srch = "";
-            string rplc = "";
-
             SNP_EditorForm child = this.ActiveMdiChild as SNP_EditorForm;
 
-            if (sender.ToString() == "Найти")
+            if (child.editorRtb.SelectedText.Substring(0, 2) == "/*" && child.editorRtb.SelectedText.Substring(child.editorRtb.SelectedText.Length - 2, 2) == "*/")
             {
-                SNP_searchForm sForm = new SNP_searchForm(false);
-
-                if (sForm.ShowDialog() == DialogResult.OK)
-                {
-                    srch = sForm.SearchText;
-                }
-
-                if (child.editorRtb.Find(srch) == -1)
-                {
-                    SNPMessage("Искомый текст не найден", false);
-                }
+                child.editorRtb.SelectionColor = Color.White;
+                child.editorRtb.SelectedText = child.editorRtb.SelectedText.Substring(2, child.editorRtb.SelectedText.Length - 4);
             }
-            else
-            {
-                SNP_searchForm sForm = new SNP_searchForm(true);
 
-                if (sForm.ShowDialog() == DialogResult.OK)
-                {
-                    srch = sForm.SearchText;
-                    rplc = sForm.ReplaceText;
-                }
+            
 
-                while (child.editorRtb.Find(srch) != -1)
-                {
-                    child.editorRtb.SelectedText = rplc;
-                }
-            }
+            //string comment = $"/*{child.editorRtb.SelectedText}*/";
+            //child.editorRtb.SelectionColor = Color.LightGray;
+            //child.editorRtb.SelectedText = comment;
+        }
+
+        private void Te_menu_comment_Click(object sender, EventArgs e)
+        {
+            SNP_EditorForm child = this.ActiveMdiChild as SNP_EditorForm;
+            string comment = $"/*{child.editorRtb.SelectedText}*/";
+            child.editorRtb.SelectionColor = Color.LightGray;
+            child.editorRtb.SelectedText = comment;
+
         }
 
 
 
+
+        #region MDIWindow
 
         /// <summary>
         /// Переопределение события формы при активировании дочернего окна
@@ -171,8 +178,6 @@ namespace SimpleNotepadPlus
                 EnableDisableElements(false);
             }
         }
-
-        #region MDIWindow
 
         /// <summary>
         /// Реорганизовать дочерние окна
@@ -266,7 +271,7 @@ namespace SimpleNotepadPlus
 
             if (cd.ShowDialog() == DialogResult.OK)
             {
-                te_rtb_editor.BackColor = cd.Color;
+                //te_rtb_editor.BackColor = cd.Color;
             }
         }
 
@@ -281,7 +286,7 @@ namespace SimpleNotepadPlus
 
             if (cd.ShowDialog() == DialogResult.OK)
             {
-                te_rtb_editor.ForeColor = cd.Color;
+                //te_rtb_editor.ForeColor = cd.Color;
             }
         }
 
@@ -296,12 +301,59 @@ namespace SimpleNotepadPlus
 
             if (fd.ShowDialog() == DialogResult.OK)
             {
-                te_rtb_editor.Font = fd.Font;
+               // te_rtb_editor.Font = fd.Font;
             }
         }
         #endregion
 
         #region Edit
+
+        /// <summary>
+        /// Поиск и замена тескта
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Te_menu_find_Click(object sender, EventArgs e)
+        {
+            string srch = "";
+            string rplc = "";
+
+            SNP_EditorForm child = this.ActiveMdiChild as SNP_EditorForm;
+
+            if (sender.ToString() == "Найти")
+            {
+                SNP_searchForm sForm = new SNP_searchForm(false);
+
+                if (sForm.ShowDialog() == DialogResult.OK)
+                {
+                    srch = sForm.SearchText;
+
+                    if (child.editorRtb.Find(srch) == -1)
+                    {
+                        SNPMessage("Искомый текст не найден", false);
+                    }
+                }
+
+
+            }
+            else
+            {
+                SNP_searchForm sForm = new SNP_searchForm(true);
+
+                if (sForm.ShowDialog() == DialogResult.OK)
+                {
+                    srch = sForm.SearchText;
+                    rplc = sForm.ReplaceText;
+
+                    while (child.editorRtb.Find(srch, RichTextBoxFinds.MatchCase) != -1)
+                    {
+                        child.editorRtb.SelectedText = rplc;
+                    }
+                }
+
+
+            }
+        }
 
         /// <summary>
         /// Вставляе текущую дату и время в позицию курсора
@@ -500,7 +552,7 @@ namespace SimpleNotepadPlus
         {
             OpenFileDialog ofd = new OpenFileDialog();
 
-            ofd.Filter = "Все файлы(*.*)|*.*|Текстовые файлы(*txt)|*.txt|Файлы cs(*cs)|*.cs";
+            ofd.Filter = "Все файлы(*.*)|*.*|Текстовые файлы(*.txt)|*.txt|Файлы cs(*.cs)|*.cs";
             ofd.FilterIndex = 2;
             ofd.Title = this.Text + " :: Открытие файла";
 
@@ -520,8 +572,22 @@ namespace SimpleNotepadPlus
                 editor.filePath = ofd.FileName;
                 editor.editorRtb.Text = File.ReadAllText(ofd.FileName);
 
+                
+
                 editor.MdiParent = this;
                 editor.Show();
+
+                if (editor.filePath.EndsWith("cs"))
+                {
+                    editor.isCode = true;
+                    editor.Enabled = false;
+                    ColorizeCode(editor);
+                    editor.Enabled = true;
+                }
+                else
+                {
+                    editor.isCode = false;
+                }
 
                 te_sb_path.Text = "Путь: " + editor.filePath;
 
@@ -538,7 +604,7 @@ namespace SimpleNotepadPlus
         {
             SaveFileDialog sfd = new SaveFileDialog();
 
-            sfd.Filter = "Все файлы(*.*)|*.*|Текстовые файлы(*txt)|*.txt|Файлы cs(*cs)|*.cs";
+            sfd.Filter = "Все файлы(*.*)|*.*|Текстовые файлы(*.txt)|*.txt|Файлы cs(*.cs)|*.cs";
             sfd.FilterIndex = 2;
             sfd.Title = this.Text + " :: Создание новго файла";
             sfd.FileName = "new_file";              //начальное наименование файла
@@ -568,6 +634,17 @@ namespace SimpleNotepadPlus
                 sw.Write("");
                 sw.Close();
 
+                if (editor.filePath.EndsWith("cs"))
+                {
+                    editor.isCode = true;
+                    editor.editorRtb.BackColor = Color.Blue;
+                    editor.editorRtb.ForeColor = Color.White;
+                }
+                else
+                {
+                    editor.isCode = false;
+                }
+
                 EnableDisableElements(true);
             }
         }
@@ -591,6 +668,14 @@ namespace SimpleNotepadPlus
         /// <param name="e"></param>
         private void Te_rtb_editor_SelectionChanged(object sender, EventArgs e)
         {
+            bool isCode = false;
+
+            if (this.ActiveMdiChild != null)
+            {
+                isCode = ((SNP_EditorForm)this.ActiveMdiChild).isCode;
+            }
+           
+
             if (((RichTextBox)sender).SelectionLength > 0)
             {
                 te_menu_copy.Enabled = true;
@@ -604,6 +689,15 @@ namespace SimpleNotepadPlus
 
                 te_cm_copy.Enabled = true;
                 te_cm_cut.Enabled = true;
+
+                if (isCode)
+                {
+                    te_menu_comment.Enabled = true;
+                    te_menu_uncomment.Enabled = true;
+
+                    te_tsb_comment.Enabled = true;
+                    te_tsb_uncomment.Enabled = true;
+                }
                 
             }
             else
@@ -619,6 +713,15 @@ namespace SimpleNotepadPlus
 
                 te_cm_copy.Enabled = false;
                 te_cm_cut.Enabled = false;
+
+                if (isCode)
+                {
+                    te_menu_comment.Enabled = false;
+                    te_menu_uncomment.Enabled = false;
+
+                    te_tsb_comment.Enabled = false;
+                    te_tsb_uncomment.Enabled = false;
+                }
             }
         }
 
@@ -630,12 +733,20 @@ namespace SimpleNotepadPlus
         private void Te_rtb_editor_TextChanged(object sender, EventArgs e)
         {
             RichTextBox rtb = sender as RichTextBox;
+            bool isCode = false;
+
+            if (this.ActiveMdiChild != null)
+            {
+                isCode = ((SNP_EditorForm)this.ActiveMdiChild).isCode;
+            }
+            
 
             Point cPosition = GetCursorPosition(rtb);
 
             te_sb_quantity.Text = QUANTITY + rtb.TextLength.ToString();
             te_sbl_line.Text = LINE + cPosition.X.ToString();
             te_sbl_position.Text = POSITION + cPosition.Y.ToString();
+
         }
 
         /// <summary>
@@ -667,6 +778,41 @@ namespace SimpleNotepadPlus
             {
                 MessageBox.Show(msg, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+
+        /// <summary>
+        /// Изменение цвета кода
+        /// </summary>
+        /// <param name="child"></param>
+        private void ColorizeCode(SNP_EditorForm child)
+        {
+            child.editorRtb.BackColor = Color.Blue;
+            child.editorRtb.ForeColor = Color.White;
+
+            int textLength = child.editorRtb.Text.Length;
+
+            foreach (string word in dictionary)
+            {
+
+                int i = 0;
+                
+                while (i <= textLength - word.Length)
+                {
+                    i = child.editorRtb.Text.IndexOf(word, i);
+
+                    if (i < 0) break;
+
+                    child.editorRtb.Find(word, i, textLength, RichTextBoxFinds.WholeWord);
+
+                    child.editorRtb.SelectionFont = new Font(child.editorRtb.Font, FontStyle.Bold);
+                    child.editorRtb.SelectionColor = Color.Yellow;
+
+                    i += word.Length;
+                }
+            }
+
+            child.editorRtb.SelectionLength = 0;
+            child.editorRtb.SelectionStart = 0;
         }
 
         /// <summary>

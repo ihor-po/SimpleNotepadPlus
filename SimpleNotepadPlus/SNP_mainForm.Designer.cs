@@ -37,6 +37,8 @@
             this.правкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripSeparator();
             this.настройкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.te_menu_font = new System.Windows.Forms.ToolStripMenuItem();
             this.te_menu_fontColor = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,12 +53,14 @@
             this.te_menu_normalAll = new System.Windows.Forms.ToolStripMenuItem();
             this.te_menu_closeAll = new System.Windows.Forms.ToolStripMenuItem();
             this.te_statusBar = new System.Windows.Forms.StatusStrip();
+            this.te_sbl_line = new System.Windows.Forms.ToolStripStatusLabel();
+            this.te_sbl_position = new System.Windows.Forms.ToolStripStatusLabel();
             this.te_sb_quantity = new System.Windows.Forms.ToolStripStatusLabel();
             this.te_sb_path = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.te_rtb_editor = new System.Windows.Forms.RichTextBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.te_cm_undo = new System.Windows.Forms.ToolStripMenuItem();
             this.te_cm_redo = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,10 +68,7 @@
             this.te_cm_copy = new System.Windows.Forms.ToolStripMenuItem();
             this.te_cm_cut = new System.Windows.Forms.ToolStripMenuItem();
             this.te_cm_insert = new System.Windows.Forms.ToolStripMenuItem();
-            this.te_sbl_line = new System.Windows.Forms.ToolStripStatusLabel();
-            this.te_sbl_position = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.te_tsb_newFile = new System.Windows.Forms.ToolStripButton();
             this.te_tsb_open = new System.Windows.Forms.ToolStripButton();
             this.te_tsb_save = new System.Windows.Forms.ToolStripButton();
@@ -78,6 +79,10 @@
             this.te_tsb_insert = new System.Windows.Forms.ToolStripButton();
             this.te_tsb_delete = new System.Windows.Forms.ToolStripButton();
             this.te_tsb_dateTime = new System.Windows.Forms.ToolStripButton();
+            this.te_tsb_search = new System.Windows.Forms.ToolStripButton();
+            this.te_tsb_replace = new System.Windows.Forms.ToolStripButton();
+            this.te_tsb_comment = new System.Windows.Forms.ToolStripButton();
+            this.te_tsb_uncomment = new System.Windows.Forms.ToolStripButton();
             this.te_tsb_font = new System.Windows.Forms.ToolStripButton();
             this.te_tsb_fontColor = new System.Windows.Forms.ToolStripButton();
             this.te_tsb_backColor = new System.Windows.Forms.ToolStripButton();
@@ -97,9 +102,9 @@
             this.te_menu_dateTime = new System.Windows.Forms.ToolStripMenuItem();
             this.te_menu_find = new System.Windows.Forms.ToolStripMenuItem();
             this.te_menu_replace = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.te_tsb_search = new System.Windows.Forms.ToolStripButton();
-            this.te_tsb_replace = new System.Windows.Forms.ToolStripButton();
+            this.toolStripMenuItem9 = new System.Windows.Forms.ToolStripSeparator();
+            this.te_menu_comment = new System.Windows.Forms.ToolStripMenuItem();
+            this.te_menu_uncomment = new System.Windows.Forms.ToolStripMenuItem();
             this.te_menu.SuspendLayout();
             this.te_statusBar.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -160,7 +165,10 @@
             this.te_menu_dateTime,
             this.toolStripMenuItem8,
             this.te_menu_find,
-            this.te_menu_replace});
+            this.te_menu_replace,
+            this.toolStripMenuItem9,
+            this.te_menu_comment,
+            this.te_menu_uncomment});
             this.правкаToolStripMenuItem.Name = "правкаToolStripMenuItem";
             this.правкаToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
             this.правкаToolStripMenuItem.Text = "&Правка";
@@ -174,6 +182,16 @@
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
             this.toolStripMenuItem4.Size = new System.Drawing.Size(266, 6);
+            // 
+            // toolStripMenuItem7
+            // 
+            this.toolStripMenuItem7.Name = "toolStripMenuItem7";
+            this.toolStripMenuItem7.Size = new System.Drawing.Size(266, 6);
+            // 
+            // toolStripMenuItem8
+            // 
+            this.toolStripMenuItem8.Name = "toolStripMenuItem8";
+            this.toolStripMenuItem8.Size = new System.Drawing.Size(266, 6);
             // 
             // настройкиToolStripMenuItem
             // 
@@ -279,6 +297,18 @@
             this.te_statusBar.TabIndex = 1;
             this.te_statusBar.Text = "statusStrip1";
             // 
+            // te_sbl_line
+            // 
+            this.te_sbl_line.Name = "te_sbl_line";
+            this.te_sbl_line.Size = new System.Drawing.Size(48, 17);
+            this.te_sbl_line.Text = "Линия: ";
+            // 
+            // te_sbl_position
+            // 
+            this.te_sbl_position.Name = "te_sbl_position";
+            this.te_sbl_position.Size = new System.Drawing.Size(58, 17);
+            this.te_sbl_position.Text = "Позиция:";
+            // 
             // te_sb_quantity
             // 
             this.te_sb_quantity.Name = "te_sb_quantity";
@@ -310,9 +340,12 @@
             this.te_tsb_insert,
             this.te_tsb_delete,
             this.te_tsb_dateTime,
-            this.toolStripSeparator3,
+            this.toolStripSeparator4,
             this.te_tsb_search,
             this.te_tsb_replace,
+            this.toolStripSeparator3,
+            this.te_tsb_comment,
+            this.te_tsb_uncomment,
             this.toolStripSeparator2,
             this.te_tsb_font,
             this.te_tsb_fontColor,
@@ -329,22 +362,17 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 28);
             // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Margin = new System.Windows.Forms.Padding(3, 0, 0, 3);
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 28);
+            // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Margin = new System.Windows.Forms.Padding(3, 0, 0, 3);
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 28);
-            // 
-            // te_rtb_editor
-            // 
-            this.te_rtb_editor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.te_rtb_editor.ContextMenuStrip = this.contextMenuStrip1;
-            this.te_rtb_editor.Enabled = false;
-            this.te_rtb_editor.Location = new System.Drawing.Point(419, 108);
-            this.te_rtb_editor.Name = "te_rtb_editor";
-            this.te_rtb_editor.Size = new System.Drawing.Size(287, 212);
-            this.te_rtb_editor.TabIndex = 3;
-            this.te_rtb_editor.Text = "";
             // 
             // contextMenuStrip1
             // 
@@ -398,27 +426,10 @@
             this.te_cm_insert.Size = new System.Drawing.Size(139, 22);
             this.te_cm_insert.Text = "Вставить";
             // 
-            // te_sbl_line
+            // toolStripSeparator4
             // 
-            this.te_sbl_line.Name = "te_sbl_line";
-            this.te_sbl_line.Size = new System.Drawing.Size(48, 17);
-            this.te_sbl_line.Text = "Линия: ";
-            // 
-            // te_sbl_position
-            // 
-            this.te_sbl_position.Name = "te_sbl_position";
-            this.te_sbl_position.Size = new System.Drawing.Size(58, 17);
-            this.te_sbl_position.Text = "Позиция:";
-            // 
-            // toolStripMenuItem7
-            // 
-            this.toolStripMenuItem7.Name = "toolStripMenuItem7";
-            this.toolStripMenuItem7.Size = new System.Drawing.Size(266, 6);
-            // 
-            // toolStripMenuItem8
-            // 
-            this.toolStripMenuItem8.Name = "toolStripMenuItem8";
-            this.toolStripMenuItem8.Size = new System.Drawing.Size(266, 6);
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 31);
             // 
             // te_tsb_newFile
             // 
@@ -534,6 +545,51 @@
             this.te_tsb_dateTime.Text = "Вставить дату и время";
             this.te_tsb_dateTime.ToolTipText = "Вставить дату и время";
             // 
+            // te_tsb_search
+            // 
+            this.te_tsb_search.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.te_tsb_search.Enabled = false;
+            this.te_tsb_search.Image = global::SimpleNotepadPlus.Properties.Resources.Actions_edit_find_icon;
+            this.te_tsb_search.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.te_tsb_search.Margin = new System.Windows.Forms.Padding(3, 0, 0, 3);
+            this.te_tsb_search.Name = "te_tsb_search";
+            this.te_tsb_search.Size = new System.Drawing.Size(28, 28);
+            this.te_tsb_search.Text = "Найти";
+            this.te_tsb_search.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            // 
+            // te_tsb_replace
+            // 
+            this.te_tsb_replace.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.te_tsb_replace.Enabled = false;
+            this.te_tsb_replace.Image = global::SimpleNotepadPlus.Properties.Resources._240px_Gtk_find_and_replace_svg;
+            this.te_tsb_replace.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.te_tsb_replace.Margin = new System.Windows.Forms.Padding(3, 0, 0, 3);
+            this.te_tsb_replace.Name = "te_tsb_replace";
+            this.te_tsb_replace.Size = new System.Drawing.Size(28, 28);
+            this.te_tsb_replace.Text = "Заменить";
+            // 
+            // te_tsb_comment
+            // 
+            this.te_tsb_comment.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.te_tsb_comment.Enabled = false;
+            this.te_tsb_comment.Image = global::SimpleNotepadPlus.Properties.Resources.Comment_icon;
+            this.te_tsb_comment.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.te_tsb_comment.Margin = new System.Windows.Forms.Padding(3, 0, 0, 3);
+            this.te_tsb_comment.Name = "te_tsb_comment";
+            this.te_tsb_comment.Size = new System.Drawing.Size(28, 28);
+            this.te_tsb_comment.Text = "Комментировать";
+            // 
+            // te_tsb_uncomment
+            // 
+            this.te_tsb_uncomment.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.te_tsb_uncomment.Enabled = false;
+            this.te_tsb_uncomment.Image = global::SimpleNotepadPlus.Properties.Resources.comment_edit_icon;
+            this.te_tsb_uncomment.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.te_tsb_uncomment.Margin = new System.Windows.Forms.Padding(3, 0, 0, 3);
+            this.te_tsb_uncomment.Name = "te_tsb_uncomment";
+            this.te_tsb_uncomment.Size = new System.Drawing.Size(28, 28);
+            this.te_tsb_uncomment.Text = "Раскомментировать";
+            // 
             // te_tsb_font
             // 
             this.te_tsb_font.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -568,7 +624,7 @@
             // 
             this.te_menu_newFile.Image = global::SimpleNotepadPlus.Properties.Resources.Default;
             this.te_menu_newFile.Name = "te_menu_newFile";
-            this.te_menu_newFile.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+            this.te_menu_newFile.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.N)));
             this.te_menu_newFile.Size = new System.Drawing.Size(237, 22);
             this.te_menu_newFile.Text = "&Новый файл";
@@ -595,7 +651,7 @@
             this.te_menu_saveAs.Enabled = false;
             this.te_menu_saveAs.Image = global::SimpleNotepadPlus.Properties.Resources.save_as_256;
             this.te_menu_saveAs.Name = "te_menu_saveAs";
-            this.te_menu_saveAs.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+            this.te_menu_saveAs.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.S)));
             this.te_menu_saveAs.Size = new System.Drawing.Size(237, 22);
             this.te_menu_saveAs.Text = "Сохранить &как ...";
@@ -685,7 +741,7 @@
             this.te_menu_dateTime.Enabled = false;
             this.te_menu_dateTime.Image = global::SimpleNotepadPlus.Properties.Resources.Apps_preferences_system_time_icon;
             this.te_menu_dateTime.Name = "te_menu_dateTime";
-            this.te_menu_dateTime.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+            this.te_menu_dateTime.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.D)));
             this.te_menu_dateTime.Size = new System.Drawing.Size(269, 22);
             this.te_menu_dateTime.Text = "Вставить дату и время";
@@ -704,46 +760,39 @@
             this.te_menu_replace.Enabled = false;
             this.te_menu_replace.Image = global::SimpleNotepadPlus.Properties.Resources._240px_Gtk_find_and_replace_svg;
             this.te_menu_replace.Name = "te_menu_replace";
-            this.te_menu_replace.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+            this.te_menu_replace.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.F)));
             this.te_menu_replace.Size = new System.Drawing.Size(269, 22);
             this.te_menu_replace.Text = "Заменить";
             // 
-            // toolStripSeparator3
+            // toolStripMenuItem9
             // 
-            this.toolStripSeparator3.Margin = new System.Windows.Forms.Padding(3, 0, 0, 3);
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 28);
+            this.toolStripMenuItem9.Name = "toolStripMenuItem9";
+            this.toolStripMenuItem9.Size = new System.Drawing.Size(266, 6);
             // 
-            // te_tsb_search
+            // te_menu_comment
             // 
-            this.te_tsb_search.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.te_tsb_search.Enabled = false;
-            this.te_tsb_search.Image = global::SimpleNotepadPlus.Properties.Resources.Actions_edit_find_icon;
-            this.te_tsb_search.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.te_tsb_search.Margin = new System.Windows.Forms.Padding(3, 0, 0, 3);
-            this.te_tsb_search.Name = "te_tsb_search";
-            this.te_tsb_search.Size = new System.Drawing.Size(28, 28);
-            this.te_tsb_search.Text = "Найти";
-            this.te_tsb_search.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.te_menu_comment.Enabled = false;
+            this.te_menu_comment.Image = global::SimpleNotepadPlus.Properties.Resources.Comment_icon;
+            this.te_menu_comment.Name = "te_menu_comment";
+            this.te_menu_comment.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.C)));
+            this.te_menu_comment.Size = new System.Drawing.Size(269, 22);
+            this.te_menu_comment.Text = "Комментировать";
             // 
-            // te_tsb_replace
+            // te_menu_uncomment
             // 
-            this.te_tsb_replace.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.te_tsb_replace.Enabled = false;
-            this.te_tsb_replace.Image = global::SimpleNotepadPlus.Properties.Resources._240px_Gtk_find_and_replace_svg;
-            this.te_tsb_replace.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.te_tsb_replace.Margin = new System.Windows.Forms.Padding(3, 0, 0, 3);
-            this.te_tsb_replace.Name = "te_tsb_replace";
-            this.te_tsb_replace.Size = new System.Drawing.Size(28, 28);
-            this.te_tsb_replace.Text = "Заменить";
+            this.te_menu_uncomment.Enabled = false;
+            this.te_menu_uncomment.Image = global::SimpleNotepadPlus.Properties.Resources.comment_edit_icon;
+            this.te_menu_uncomment.Name = "te_menu_uncomment";
+            this.te_menu_uncomment.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.U)));
+            this.te_menu_uncomment.Size = new System.Drawing.Size(269, 22);
+            this.te_menu_uncomment.Text = "Раскомментировать";
             // 
             // te_form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(988, 760);
-            this.Controls.Add(this.te_rtb_editor);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.te_statusBar);
             this.Controls.Add(this.te_menu);
@@ -778,7 +827,6 @@
         private System.Windows.Forms.ToolStripButton te_tsb_open;
         private System.Windows.Forms.ToolStripButton te_tsb_save;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.RichTextBox te_rtb_editor;
         private System.Windows.Forms.ToolStripMenuItem te_menu_newFile;
         private System.Windows.Forms.ToolStripMenuItem te_menu_openFile;
         private System.Windows.Forms.ToolStripMenuItem te_menu_saveFile;
@@ -839,6 +887,12 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton te_tsb_search;
         private System.Windows.Forms.ToolStripButton te_tsb_replace;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripButton te_tsb_comment;
+        private System.Windows.Forms.ToolStripButton te_tsb_uncomment;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem9;
+        private System.Windows.Forms.ToolStripMenuItem te_menu_comment;
+        private System.Windows.Forms.ToolStripMenuItem te_menu_uncomment;
     }
 }
 
