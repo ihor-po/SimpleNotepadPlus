@@ -13,9 +13,14 @@ namespace TextEditor
 {
     public partial class te_form : Form
     {
-        const string TITLE = "Текстовый редактор";
+        const string TITLE = "Редактор";
         const string QUANTITY = "Колличество символов: ";
         const string PATH = "Путь: ";
+        const string LINE = "Строка: ";
+        const string POSITION = "Позиция: ";
+
+        RichTextBox virtualRtb;
+
         public te_form()
         {
             InitializeComponent();
@@ -23,6 +28,8 @@ namespace TextEditor
 
         protected override void OnLoad(EventArgs e)
         {
+            virtualRtb = new RichTextBox();
+
             te_sb_quantity.Text = QUANTITY + 0.ToString();
             te_sb_path.Text = PATH;
 
@@ -90,6 +97,30 @@ namespace TextEditor
             this.WindowState = FormWindowState.Maximized;
            
         }
+
+        /// <summary>
+        /// Переопределение события формы при активировании дочернего окна
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnMdiChildActivate(EventArgs e)
+        {
+            SNP_EditorForm child = this.ActiveMdiChild as SNP_EditorForm;
+            if (child != null)
+            {
+                te_sb_path.Text = "Путь: " + child.filePath;
+                Point cPosition = GetCursorPosition(child.editorRtb);
+
+                te_sb_quantity.Text = QUANTITY + child.editorRtb.TextLength.ToString();
+                te_sbl_line.Text = LINE + cPosition.X.ToString();
+                te_sbl_position.Text = POSITION + cPosition.Y.ToString();
+            }
+            else
+            {
+                EnableDisableElements(false);
+            }
+        }
+
+        #region MDIWindow
 
         /// <summary>
         /// Реорганизовать дочерние окна
@@ -169,7 +200,7 @@ namespace TextEditor
             }
         }
 
-
+        #endregion
 
         /// <summary>
         /// Завершение работы
@@ -181,6 +212,7 @@ namespace TextEditor
             Application.Exit();
         }
 
+        #region Settings
         /// <summary>
         /// Изменение цвета фона
         /// </summary>
@@ -225,7 +257,9 @@ namespace TextEditor
                 te_rtb_editor.Font = fd.Font;
             }
         }
+        #endregion
 
+        #region Edit
         /// <summary>
         /// Выбрать все в окне редактора
         /// </summary>
@@ -302,6 +336,7 @@ namespace TextEditor
                 te_rtb_editor.Copy();
             }
         }
+        #endregion
 
         /// <summary>
         /// Обработка измениения выделения в редакторе
@@ -337,25 +372,36 @@ namespace TextEditor
         /// <param name="e"></param>
         private void Te_menu_saveAs_Click(object sender, EventArgs e)
         {
-            SaveFileDialog sfd = new SaveFileDialog();
-
-            sfd.Filter = "Все файлы(*.*)|*.*|Текстовые файлы(*txt)|*.txt";
-            sfd.FilterIndex = 2;
-            sfd.Title = "Тестовый редактор :: Сохранить файла как ...";
-            sfd.FileName = "new_name";              //начальное наименование файла
-            sfd.DefaultExt = "txt";                 //задаем начальное раширение файла
-            sfd.ValidateNames = true;               //валидация введенного имени
-
-            if (sfd.ShowDialog() == DialogResult.OK)
+            if (this.ActiveMdiChild != null)
             {
-                string[] path = sfd.FileName.Split('\\');
+                SNP_EditorForm child = this.ActiveMdiChild as SNP_EditorForm;
+                
 
-                this.Text = TITLE + $" :: {path[path.Length - 1]}";
+                SaveFileDialog sfd = new SaveFileDialog();
 
-                te_sb_path.Text = "Путь: " + sfd.FileName;
+                sfd.Filter = "Все файлы(*.*)|*.*|Текстовые файлы(*txt)|*.txt|Файлы cs(*cs)|*.cs";
+                sfd.FilterIndex = 2;
+                sfd.Title = "Тестовый редактор :: Сохранить файла как ...";
+                sfd.FileName = "new_name";              //начальное наименование файла
+                sfd.DefaultExt = "txt";                 //задаем начальное раширение файла
+                sfd.ValidateNames = true;               //валидация введенного имени
 
-                File.WriteAllText(sfd.FileName, te_rtb_editor.Text);
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    string[] path = sfd.FileName.Split('\\');
+
+                    child.fileName = path[path.Length - 1];
+                    child.Text = child.fileName;
+                    child.filePath = sfd.FileName;
+
+                    te_sb_path.Text = PATH + child.filePath;
+
+                    File.WriteAllText(child.filePath, child.editorRtb.Text);
+                }
+
+
             }
+            
         }
 
         /// <summary>
@@ -365,8 +411,48 @@ namespace TextEditor
         /// <param name="e"></param>
         private void Te_menu_closeFile_Click(object sender, EventArgs e)
         {
-            te_rtb_editor.Clear();
-            EnableDisableElements(false);
+            if (this.ActiveMdiChild != null)
+            {
+                this.ActiveMdiChild.Close();
+
+                //Если дочерних окон больше нет то оключаем элементы управления
+                if (this.MdiChildren.Length == 0)
+                {
+                    EnableDisableElements(false);
+                }
+            }
+            
+        }
+
+        /// <summary>
+        /// Событие изменения текста в редакторе
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Te_rtb_editor_TextChanged(object sender, EventArgs e)
+        {
+            RichTextBox rtb = sender as RichTextBox;
+
+            Point cPosition = GetCursorPosition(rtb);
+
+            te_sb_quantity.Text = QUANTITY + rtb.TextLength.ToString();
+            te_sbl_line.Text = LINE + cPosition.X.ToString();
+            te_sbl_position.Text = POSITION + cPosition.Y.ToString();
+        }
+
+        /// <summary>
+        /// Сохранение файла
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Te_menu_saveFile_Click(object sender, EventArgs e)
+        {
+            if (this.ActiveMdiChild != null)
+            {
+                SNP_EditorForm child = this.ActiveMdiChild as SNP_EditorForm;
+                File.WriteAllText(child.filePath, child.editorRtb.Text);
+            }
+            
         }
 
         /// <summary>
@@ -378,44 +464,33 @@ namespace TextEditor
         {
             OpenFileDialog ofd = new OpenFileDialog();
 
-            ofd.Filter = "Все файлы(*.*)|*.*|Текстовые файлы(*txt)|*.txt";
+            ofd.Filter = "Все файлы(*.*)|*.*|Текстовые файлы(*txt)|*.txt|Файлы cs(*cs)|*.cs";
             ofd.FilterIndex = 2;
-            ofd.Title = "Тестовый редактор :: Открытие файла";
+            ofd.Title = this.Text + " :: Открытие файла";
 
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                te_rtb_editor.Clear();
-
                 string[] path = ofd.FileName.Split('\\');
 
-                this.Text = TITLE + $" :: {path[path.Length - 1]}";
+                SNP_EditorForm editor = new SNP_EditorForm();
 
-                te_sb_path.Text = "Путь: " + ofd.FileName;
+                //Подписка на события
+                editor.editorRtb.SelectionChanged += Te_rtb_editor_SelectionChanged;
+                editor.editorRtb.TextChanged += Te_rtb_editor_TextChanged;
+                //Конец подписки
 
-                te_rtb_editor.Text = File.ReadAllText(ofd.FileName);
+                editor.Text = path[path.Length - 1];
+                editor.fileName = path[path.Length - 1];
+                editor.filePath = ofd.FileName;
+                editor.editorRtb.Text = File.ReadAllText(ofd.FileName);
+
+                editor.MdiParent = this;
+                editor.Show();
+
+                te_sb_path.Text = "Путь: " + editor.filePath;
 
                 EnableDisableElements(true);
             }
-        }
-
-        /// <summary>
-        /// Подсчет символов в редактора
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Te_rtb_editor_TextChanged(object sender, EventArgs e)
-        {
-            te_sb_quantity.Text = QUANTITY +  te_rtb_editor.TextLength.ToString();
-        }
-
-        /// <summary>
-        /// Сохранение файла
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Te_menu_saveFile_Click(object sender, EventArgs e)
-        {
-            File.WriteAllText(te_sb_path.Text.Substring(6), te_rtb_editor.Text);
         }
 
         /// <summary>
@@ -427,43 +502,52 @@ namespace TextEditor
         {
             SaveFileDialog sfd = new SaveFileDialog();
 
-            sfd.Filter = "Все файлы(*.*)|*.*|Текстовые файлы(*txt)|*.txt";
+            sfd.Filter = "Все файлы(*.*)|*.*|Текстовые файлы(*txt)|*.txt|Файлы cs(*cs)|*.cs";
             sfd.FilterIndex = 2;
-            sfd.Title = "Тестовый редактор :: Создание новго файла";
+            sfd.Title = this.Text + " :: Создание новго файла";
             sfd.FileName = "new_file";              //начальное наименование файла
             sfd.DefaultExt = "txt";                 //задаем начальное раширение файла
             sfd.ValidateNames = true;               //валидация введенного имени
 
             if (sfd.ShowDialog() == DialogResult.OK)
             {
-
-                SNP_EditorForm editor = new SNP_EditorForm();
-                editor.MdiParent = this;
-
-                editor.editorRtb.SelectionChanged += Te_rtb_editor_SelectionChanged;
-
-                editor.Show();
-
-
-
-
-                te_rtb_editor.Clear();
-
-
-
                 string[] path = sfd.FileName.Split('\\');
 
-                this.Text = TITLE + $" :: {path[path.Length - 1]}";
 
-                te_sb_path.Text = "Путь: " + sfd.FileName;
+                SNP_EditorForm editor = new SNP_EditorForm();
+                
+                //Подписка на события
+                editor.editorRtb.SelectionChanged += Te_rtb_editor_SelectionChanged;
+                editor.editorRtb.TextChanged += Te_rtb_editor_TextChanged;
+                //Конец подписки
+
+                editor.Text = path[path.Length - 1];
+                editor.fileName = path[path.Length - 1];
+                editor.filePath = sfd.FileName;
+
+                editor.MdiParent = this;
+                editor.Show();
 
                 StreamWriter sw = new StreamWriter(sfd.FileName, false, Encoding.Default);
                 sw.Write("");
                 sw.Close();
 
                 EnableDisableElements(true);
-
             }
+        }
+
+        /// <summary>
+        /// Получение позиции курсора
+        /// </summary>
+        /// <param name="rtb"></param>
+        /// <returns>Возвращает позицию курсора</returns>
+        private Point GetCursorPosition(RichTextBox rtb)
+        {
+            Point cPosition = new Point();
+            cPosition.X = rtb.GetLineFromCharIndex(rtb.SelectionStart) + 1;
+            cPosition.Y = rtb.SelectionStart - rtb.GetFirstCharIndexOfCurrentLine();
+
+            return cPosition;
         }
 
         /// <summary>

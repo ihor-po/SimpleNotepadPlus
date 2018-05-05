@@ -87,6 +87,8 @@
             this.te_cm_copy = new System.Windows.Forms.ToolStripMenuItem();
             this.te_cm_cut = new System.Windows.Forms.ToolStripMenuItem();
             this.te_cm_insert = new System.Windows.Forms.ToolStripMenuItem();
+            this.te_sbl_line = new System.Windows.Forms.ToolStripStatusLabel();
+            this.te_sbl_position = new System.Windows.Forms.ToolStripStatusLabel();
             this.te_menu.SuspendLayout();
             this.te_statusBar.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -146,6 +148,7 @@
             // 
             // te_menu_saveAs
             // 
+            this.te_menu_saveAs.Enabled = false;
             this.te_menu_saveAs.Name = "te_menu_saveAs";
             this.te_menu_saveAs.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.S)));
@@ -343,6 +346,8 @@
             // te_statusBar
             // 
             this.te_statusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.te_sbl_line,
+            this.te_sbl_position,
             this.te_sb_quantity,
             this.te_sb_path});
             this.te_statusBar.Location = new System.Drawing.Point(0, 738);
@@ -587,6 +592,18 @@
             this.te_cm_insert.Size = new System.Drawing.Size(139, 22);
             this.te_cm_insert.Text = "Вставить";
             // 
+            // te_sbl_line
+            // 
+            this.te_sbl_line.Name = "te_sbl_line";
+            this.te_sbl_line.Size = new System.Drawing.Size(48, 17);
+            this.te_sbl_line.Text = "Линия: ";
+            // 
+            // te_sbl_position
+            // 
+            this.te_sbl_position.Name = "te_sbl_position";
+            this.te_sbl_position.Size = new System.Drawing.Size(58, 17);
+            this.te_sbl_position.Text = "Позиция:";
+            // 
             // te_form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
@@ -675,6 +692,8 @@
         private System.Windows.Forms.ToolStripMenuItem te_menu_minAll;
         private System.Windows.Forms.ToolStripMenuItem te_menu_normalAll;
         private System.Windows.Forms.ToolStripMenuItem te_menu_closeAll;
+        private System.Windows.Forms.ToolStripStatusLabel te_sbl_line;
+        private System.Windows.Forms.ToolStripStatusLabel te_sbl_position;
     }
 }
 
