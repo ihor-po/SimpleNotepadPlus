@@ -12,9 +12,21 @@ namespace TextEditor
 {
     public partial class SNP_EditorForm : Form
     {
+        public RichTextBox editorRtb;
+
+        public string fileName { get; set; } = "";
+
+        public string filePath { get; set; } = "";
+
         public SNP_EditorForm()
         {
             InitializeComponent();
+            editorRtb = snpe_rtb;
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            editorRtb = snpe_rtb;
         }
     }
 }

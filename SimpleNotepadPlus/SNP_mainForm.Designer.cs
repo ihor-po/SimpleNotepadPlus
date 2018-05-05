@@ -53,6 +53,15 @@
             this.te_menu_font = new System.Windows.Forms.ToolStripMenuItem();
             this.te_menu_fontColor = new System.Windows.Forms.ToolStripMenuItem();
             this.te_menu_backgroundColor = new System.Windows.Forms.ToolStripMenuItem();
+            this.окноToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.te_menu_cascade = new System.Windows.Forms.ToolStripMenuItem();
+            this.te_menu_horizontal = new System.Windows.Forms.ToolStripMenuItem();
+            this.te_menu_vertical = new System.Windows.Forms.ToolStripMenuItem();
+            this.te_menu_reorgAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
+            this.te_menu_minAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.te_menu_normalAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.te_menu_closeAll = new System.Windows.Forms.ToolStripMenuItem();
             this.te_statusBar = new System.Windows.Forms.StatusStrip();
             this.te_sb_quantity = new System.Windows.Forms.ToolStripStatusLabel();
             this.te_sb_path = new System.Windows.Forms.ToolStripStatusLabel();
@@ -78,15 +87,6 @@
             this.te_cm_copy = new System.Windows.Forms.ToolStripMenuItem();
             this.te_cm_cut = new System.Windows.Forms.ToolStripMenuItem();
             this.te_cm_insert = new System.Windows.Forms.ToolStripMenuItem();
-            this.окноToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.каскадToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.горизонтальноToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.вертикальноToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.реарганизоватьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
-            this.закрытьВсеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.развернутьВсеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.закрытьВсеToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.te_menu.SuspendLayout();
             this.te_statusBar.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -277,6 +277,68 @@
             this.te_menu_backgroundColor.Name = "te_menu_backgroundColor";
             this.te_menu_backgroundColor.Size = new System.Drawing.Size(148, 22);
             this.te_menu_backgroundColor.Text = "Цвет фона";
+            // 
+            // окноToolStripMenuItem
+            // 
+            this.окноToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.te_menu_cascade,
+            this.te_menu_horizontal,
+            this.te_menu_vertical,
+            this.te_menu_reorgAll,
+            this.toolStripMenuItem6,
+            this.te_menu_minAll,
+            this.te_menu_normalAll,
+            this.te_menu_closeAll});
+            this.окноToolStripMenuItem.Name = "окноToolStripMenuItem";
+            this.окноToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.окноToolStripMenuItem.Text = "Окно";
+            // 
+            // te_menu_cascade
+            // 
+            this.te_menu_cascade.Name = "te_menu_cascade";
+            this.te_menu_cascade.Size = new System.Drawing.Size(161, 22);
+            this.te_menu_cascade.Text = "Каскад";
+            // 
+            // te_menu_horizontal
+            // 
+            this.te_menu_horizontal.Name = "te_menu_horizontal";
+            this.te_menu_horizontal.Size = new System.Drawing.Size(161, 22);
+            this.te_menu_horizontal.Text = "Горизонтально";
+            // 
+            // te_menu_vertical
+            // 
+            this.te_menu_vertical.Name = "te_menu_vertical";
+            this.te_menu_vertical.Size = new System.Drawing.Size(161, 22);
+            this.te_menu_vertical.Text = "Вертикально";
+            // 
+            // te_menu_reorgAll
+            // 
+            this.te_menu_reorgAll.Name = "te_menu_reorgAll";
+            this.te_menu_reorgAll.Size = new System.Drawing.Size(161, 22);
+            this.te_menu_reorgAll.Text = "Реорганизовать";
+            // 
+            // toolStripMenuItem6
+            // 
+            this.toolStripMenuItem6.Name = "toolStripMenuItem6";
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(158, 6);
+            // 
+            // te_menu_minAll
+            // 
+            this.te_menu_minAll.Name = "te_menu_minAll";
+            this.te_menu_minAll.Size = new System.Drawing.Size(161, 22);
+            this.te_menu_minAll.Text = "Свернуть все";
+            // 
+            // te_menu_normalAll
+            // 
+            this.te_menu_normalAll.Name = "te_menu_normalAll";
+            this.te_menu_normalAll.Size = new System.Drawing.Size(161, 22);
+            this.te_menu_normalAll.Text = "Развернуть все";
+            // 
+            // te_menu_closeAll
+            // 
+            this.te_menu_closeAll.Name = "te_menu_closeAll";
+            this.te_menu_closeAll.Size = new System.Drawing.Size(161, 22);
+            this.te_menu_closeAll.Text = "Закрыть все";
             // 
             // te_statusBar
             // 
@@ -525,68 +587,6 @@
             this.te_cm_insert.Size = new System.Drawing.Size(139, 22);
             this.te_cm_insert.Text = "Вставить";
             // 
-            // окноToolStripMenuItem
-            // 
-            this.окноToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.каскадToolStripMenuItem,
-            this.горизонтальноToolStripMenuItem,
-            this.вертикальноToolStripMenuItem,
-            this.реарганизоватьToolStripMenuItem,
-            this.toolStripMenuItem6,
-            this.закрытьВсеToolStripMenuItem,
-            this.развернутьВсеToolStripMenuItem,
-            this.закрытьВсеToolStripMenuItem1});
-            this.окноToolStripMenuItem.Name = "окноToolStripMenuItem";
-            this.окноToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
-            this.окноToolStripMenuItem.Text = "Окно";
-            // 
-            // каскадToolStripMenuItem
-            // 
-            this.каскадToolStripMenuItem.Name = "каскадToolStripMenuItem";
-            this.каскадToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
-            this.каскадToolStripMenuItem.Text = "Каскад";
-            // 
-            // горизонтальноToolStripMenuItem
-            // 
-            this.горизонтальноToolStripMenuItem.Name = "горизонтальноToolStripMenuItem";
-            this.горизонтальноToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
-            this.горизонтальноToolStripMenuItem.Text = "Горизонтально";
-            // 
-            // вертикальноToolStripMenuItem
-            // 
-            this.вертикальноToolStripMenuItem.Name = "вертикальноToolStripMenuItem";
-            this.вертикальноToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
-            this.вертикальноToolStripMenuItem.Text = "Вертикально";
-            // 
-            // реарганизоватьToolStripMenuItem
-            // 
-            this.реарганизоватьToolStripMenuItem.Name = "реарганизоватьToolStripMenuItem";
-            this.реарганизоватьToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
-            this.реарганизоватьToolStripMenuItem.Text = "Реорганизовать";
-            // 
-            // toolStripMenuItem6
-            // 
-            this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(158, 6);
-            // 
-            // закрытьВсеToolStripMenuItem
-            // 
-            this.закрытьВсеToolStripMenuItem.Name = "закрытьВсеToolStripMenuItem";
-            this.закрытьВсеToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
-            this.закрытьВсеToolStripMenuItem.Text = "Свернуть все";
-            // 
-            // развернутьВсеToolStripMenuItem
-            // 
-            this.развернутьВсеToolStripMenuItem.Name = "развернутьВсеToolStripMenuItem";
-            this.развернутьВсеToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
-            this.развернутьВсеToolStripMenuItem.Text = "Развернуть все";
-            // 
-            // закрытьВсеToolStripMenuItem1
-            // 
-            this.закрытьВсеToolStripMenuItem1.Name = "закрытьВсеToolStripMenuItem1";
-            this.закрытьВсеToolStripMenuItem1.Size = new System.Drawing.Size(161, 22);
-            this.закрытьВсеToolStripMenuItem1.Text = "Закрыть все";
-            // 
             // te_form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
@@ -667,14 +667,14 @@
         private System.Windows.Forms.ToolStripMenuItem te_cm_cut;
         private System.Windows.Forms.ToolStripMenuItem te_cm_insert;
         private System.Windows.Forms.ToolStripMenuItem окноToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem каскадToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem горизонтальноToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem вертикальноToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem реарганизоватьToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem te_menu_cascade;
+        private System.Windows.Forms.ToolStripMenuItem te_menu_horizontal;
+        private System.Windows.Forms.ToolStripMenuItem te_menu_vertical;
+        private System.Windows.Forms.ToolStripMenuItem te_menu_reorgAll;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem6;
-        private System.Windows.Forms.ToolStripMenuItem закрытьВсеToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem развернутьВсеToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem закрытьВсеToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem te_menu_minAll;
+        private System.Windows.Forms.ToolStripMenuItem te_menu_normalAll;
+        private System.Windows.Forms.ToolStripMenuItem te_menu_closeAll;
     }
 }
 

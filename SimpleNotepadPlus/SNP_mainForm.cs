@@ -79,8 +79,97 @@ namespace TextEditor
 
             te_menu_exit.Click += Te_menu_exit_Click;
 
+            te_menu_closeAll.Click += Te_menu_closeAll_Click;
+            te_menu_minAll.Click += Te_menu_minAll_Click;
+            te_menu_normalAll.Click += Te_menu_normalAll_Click;
+            te_menu_horizontal.Click += Te_menu_horizontal_Click;
+            te_menu_vertical.Click += Te_menu_vertical_Click;
+            te_menu_cascade.Click += Te_menu_cascade_Click;
+            te_menu_reorgAll.Click += Te_menu_reorgAll_Click;
+
             this.WindowState = FormWindowState.Maximized;
+           
         }
+
+        /// <summary>
+        /// Реорганизовать дочерние окна
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Te_menu_reorgAll_Click(object sender, EventArgs e)
+        {
+            this.LayoutMdi(MdiLayout.ArrangeIcons);
+        }
+
+        /// <summary>
+        /// Расположить дочерние окна каскадом
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Te_menu_cascade_Click(object sender, EventArgs e)
+        {
+            this.LayoutMdi(MdiLayout.Cascade);
+        }
+
+        /// <summary>
+        /// Расположить дочерние окна вертикально
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Te_menu_vertical_Click(object sender, EventArgs e)
+        {
+            this.LayoutMdi(MdiLayout.TileVertical);
+        }
+
+        /// <summary>
+        /// Расположить дочерние окна горизонтально
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Te_menu_horizontal_Click(object sender, EventArgs e)
+        {
+            this.LayoutMdi(MdiLayout.TileHorizontal);
+        }
+
+        /// <summary>
+        /// Развернуть все дочерние окна
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Te_menu_normalAll_Click(object sender, EventArgs e)
+        {
+            foreach (Form f in MdiChildren)
+            {
+                f.WindowState = FormWindowState.Normal;
+            }
+        }
+
+        /// <summary>
+        /// Сворачивание всех дочерних окон
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Te_menu_minAll_Click(object sender, EventArgs e)
+        {
+            foreach (Form f in MdiChildren)
+            {
+                f.WindowState = FormWindowState.Minimized;
+            }
+        }
+        /// <summary>
+        /// Закрытие дочерних окон
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Te_menu_closeAll_Click(object sender, EventArgs e)
+        {
+            foreach (Form f in MdiChildren)
+            {
+                f.Close();
+            }
+        }
+
+
 
         /// <summary>
         /// Завершение работы
@@ -89,7 +178,7 @@ namespace TextEditor
         /// <param name="e"></param>
         private void Te_menu_exit_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Application.Exit();
         }
 
         /// <summary>
@@ -221,7 +310,7 @@ namespace TextEditor
         /// <param name="e"></param>
         private void Te_rtb_editor_SelectionChanged(object sender, EventArgs e)
         {
-            if (te_rtb_editor.SelectionLength > 0)
+            if (((RichTextBox)sender).SelectionLength > 0)
             {
                 te_menu_copy.Enabled = true;
                 te_menu_cut.Enabled = true;
@@ -347,7 +436,21 @@ namespace TextEditor
 
             if (sfd.ShowDialog() == DialogResult.OK)
             {
+
+                SNP_EditorForm editor = new SNP_EditorForm();
+                editor.MdiParent = this;
+
+                editor.editorRtb.SelectionChanged += Te_rtb_editor_SelectionChanged;
+
+                editor.Show();
+
+
+
+
                 te_rtb_editor.Clear();
+
+
+
                 string[] path = sfd.FileName.Split('\\');
 
                 this.Text = TITLE + $" :: {path[path.Length - 1]}";
