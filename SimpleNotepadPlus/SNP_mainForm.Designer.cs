@@ -105,6 +105,9 @@
             this.toolStripMenuItem9 = new System.Windows.Forms.ToolStripSeparator();
             this.te_menu_comment = new System.Windows.Forms.ToolStripMenuItem();
             this.te_menu_uncomment = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.te_tscb_editorStyle = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.te_menu.SuspendLayout();
             this.te_statusBar.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -349,7 +352,10 @@
             this.toolStripSeparator2,
             this.te_tsb_font,
             this.te_tsb_fontColor,
-            this.te_tsb_backColor});
+            this.te_tsb_backColor,
+            this.toolStripSeparator5,
+            this.toolStripLabel1,
+            this.te_tscb_editorStyle});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(988, 31);
@@ -788,6 +794,27 @@
             this.te_menu_uncomment.Size = new System.Drawing.Size(269, 22);
             this.te_menu_uncomment.Text = "Раскомментировать";
             // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Margin = new System.Windows.Forms.Padding(5, 0, 0, 5);
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 26);
+            // 
+            // te_tscb_editorStyle
+            // 
+            this.te_tscb_editorStyle.Items.AddRange(new object[] {
+            "Обычниый",
+            "Кода"});
+            this.te_tscb_editorStyle.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.te_tscb_editorStyle.Name = "te_tscb_editorStyle";
+            this.te_tscb_editorStyle.Size = new System.Drawing.Size(121, 31);
+            // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(77, 28);
+            this.toolStripLabel1.Text = "Редактор";
+            // 
             // te_form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
@@ -893,6 +920,9 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem9;
         private System.Windows.Forms.ToolStripMenuItem te_menu_comment;
         private System.Windows.Forms.ToolStripMenuItem te_menu_uncomment;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+        private System.Windows.Forms.ToolStripComboBox te_tscb_editorStyle;
     }
 }
 

@@ -122,38 +122,40 @@ namespace SimpleNotepadPlus
             te_menu_uncomment.Click += Te_menu_uncomment_Click;
             te_tsb_uncomment.Click += Te_menu_uncomment_Click;
 
+            te_tscb_editorStyle.SelectedIndexChanged += Te_tscb_editorStyle_SelectedIndexChanged;
+
+            te_tscb_editorStyle.SelectedIndex = 0;
+
             this.WindowState = FormWindowState.Maximized;
            
         }
 
-        private void Te_menu_uncomment_Click(object sender, EventArgs e)
+        private void Te_tscb_editorStyle_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SNP_EditorForm child = this.ActiveMdiChild as SNP_EditorForm;
+            ToolStripComboBox cb = sender as ToolStripComboBox;
+            SNP_EditorForm child = null;
 
-            if (child.editorRtb.SelectedText.Substring(0, 2) == "/*" && child.editorRtb.SelectedText.Substring(child.editorRtb.SelectedText.Length - 2, 2) == "*/")
+            if (this.ActiveMdiChild != null)
             {
-                child.editorRtb.SelectionColor = Color.White;
-                child.editorRtb.SelectedText = child.editorRtb.SelectedText.Substring(2, child.editorRtb.SelectedText.Length - 4);
+                child = this.ActiveMdiChild as SNP_EditorForm;
             }
 
-            
-
-            //string comment = $"/*{child.editorRtb.SelectedText}*/";
-            //child.editorRtb.SelectionColor = Color.LightGray;
-            //child.editorRtb.SelectedText = comment;
+            switch(cb.SelectedIndex)
+            {
+                case 0:
+                    if (child != null)
+                    {
+                        ColorizeProcess(1, child.editorRtb);
+                    }
+                    break;
+                case 1:
+                    if (child != null)
+                    {
+                        ColorizeProcess(2, child.editorRtb);
+                    }
+                    break;
+            }
         }
-
-        private void Te_menu_comment_Click(object sender, EventArgs e)
-        {
-            SNP_EditorForm child = this.ActiveMdiChild as SNP_EditorForm;
-            string comment = $"/*{child.editorRtb.SelectedText}*/";
-            child.editorRtb.SelectionColor = Color.LightGray;
-            child.editorRtb.SelectedText = comment;
-
-        }
-
-
-
 
         #region MDIWindow
 
@@ -469,6 +471,37 @@ namespace SimpleNotepadPlus
         #endregion
 
         #region File
+
+        /// <summary>
+        /// Раскомментировать
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Te_menu_uncomment_Click(object sender, EventArgs e)
+        {
+            SNP_EditorForm child = this.ActiveMdiChild as SNP_EditorForm;
+
+            if (child.editorRtb.SelectedText.Substring(0, 2) == "/*" && child.editorRtb.SelectedText.Substring(child.editorRtb.SelectedText.Length - 2, 2) == "*/")
+            {
+                child.editorRtb.SelectionColor = Color.White;
+                child.editorRtb.SelectedText = child.editorRtb.SelectedText.Substring(2, child.editorRtb.SelectedText.Length - 4);
+            }
+        }
+
+        /// <summary>
+        /// Закомментирровать
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Te_menu_comment_Click(object sender, EventArgs e)
+        {
+            SNP_EditorForm child = this.ActiveMdiChild as SNP_EditorForm;
+            string comment = $"/*{child.editorRtb.SelectedText}*/";
+            child.editorRtb.SelectionColor = Color.LightGray;
+            child.editorRtb.SelectedText = comment;
+
+        }
+
         /// <summary>
         /// Сохранить файл как ...
         /// </summary>
@@ -572,21 +605,22 @@ namespace SimpleNotepadPlus
                 editor.filePath = ofd.FileName;
                 editor.editorRtb.Text = File.ReadAllText(ofd.FileName);
 
-                
-
                 editor.MdiParent = this;
                 editor.Show();
 
                 if (editor.filePath.EndsWith("cs"))
                 {
-                    editor.isCode = true;
+                    
                     editor.Enabled = false;
-                    ColorizeCode(editor);
+
+                    te_tscb_editorStyle.SelectedIndex = 1;
+                    ColorizeProcess(2, editor.editorRtb);
+
                     editor.Enabled = true;
                 }
                 else
                 {
-                    editor.isCode = false;
+                    te_tscb_editorStyle.SelectedIndex = 0;
                 }
 
                 te_sb_path.Text = "Путь: " + editor.filePath;
@@ -636,13 +670,8 @@ namespace SimpleNotepadPlus
 
                 if (editor.filePath.EndsWith("cs"))
                 {
-                    editor.isCode = true;
-                    editor.editorRtb.BackColor = Color.Blue;
-                    editor.editorRtb.ForeColor = Color.White;
-                }
-                else
-                {
-                    editor.isCode = false;
+                    te_tscb_editorStyle.SelectedIndex = 1;
+                    
                 }
 
                 EnableDisableElements(true);
@@ -668,14 +697,6 @@ namespace SimpleNotepadPlus
         /// <param name="e"></param>
         private void Te_rtb_editor_SelectionChanged(object sender, EventArgs e)
         {
-            bool isCode = false;
-
-            if (this.ActiveMdiChild != null)
-            {
-                isCode = ((SNP_EditorForm)this.ActiveMdiChild).isCode;
-            }
-           
-
             if (((RichTextBox)sender).SelectionLength > 0)
             {
                 te_menu_copy.Enabled = true;
@@ -690,7 +711,7 @@ namespace SimpleNotepadPlus
                 te_cm_copy.Enabled = true;
                 te_cm_cut.Enabled = true;
 
-                if (isCode)
+                if (te_tscb_editorStyle.SelectedIndex == 1)
                 {
                     te_menu_comment.Enabled = true;
                     te_menu_uncomment.Enabled = true;
@@ -714,7 +735,7 @@ namespace SimpleNotepadPlus
                 te_cm_copy.Enabled = false;
                 te_cm_cut.Enabled = false;
 
-                if (isCode)
+                if (te_tscb_editorStyle.SelectedIndex == 1)
                 {
                     te_menu_comment.Enabled = false;
                     te_menu_uncomment.Enabled = false;
@@ -733,19 +754,64 @@ namespace SimpleNotepadPlus
         private void Te_rtb_editor_TextChanged(object sender, EventArgs e)
         {
             RichTextBox rtb = sender as RichTextBox;
-            bool isCode = false;
-
-            if (this.ActiveMdiChild != null)
-            {
-                isCode = ((SNP_EditorForm)this.ActiveMdiChild).isCode;
-            }
-            
 
             Point cPosition = GetCursorPosition(rtb);
 
             te_sb_quantity.Text = QUANTITY + rtb.TextLength.ToString();
             te_sbl_line.Text = LINE + cPosition.X.ToString();
             te_sbl_position.Text = POSITION + cPosition.Y.ToString();
+
+            if (te_tscb_editorStyle.SelectedIndex == 1)
+            {
+                if (rtb.Text[rtb.Text.Length - 1] == ' ' ||
+                    rtb.Text[rtb.Text.Length - 1] == ',' ||
+                    rtb.Text[rtb.Text.Length - 1] == ';' ||
+                    rtb.Text[rtb.Text.Length - 1] == '(' ||
+                    rtb.Text[rtb.Text.Length - 1] == ')' ||
+                    rtb.Text[rtb.Text.Length - 1] == '[' ||
+                    rtb.Text[rtb.Text.Length - 1] == ']' ||
+                    rtb.Text[rtb.Text.Length - 1] == '!' ||
+                    rtb.Text[rtb.Text.Length - 1] == '{' ||
+                    rtb.Text[rtb.Text.Length - 1] == '}' ||
+                    rtb.Text[rtb.Text.Length - 1] == ':' ||
+                    rtb.Text[rtb.Text.Length - 1] == '\r'
+                    )
+                {
+                    int start = rtb.Text.Length - cPosition.Y;
+                    int length = rtb.Text.Length;
+
+                    foreach (string word in dictionary)
+                    {
+                        int i = 0;
+
+                        int res = length - word.Length;
+
+                        if (res > 0)
+                        {
+                            while (i <= res)
+                            {
+                                i = rtb.Text.IndexOf(word, i);
+                               
+
+                                //MessageBox.Show(word + '\r' + $"res = {res}\ri = {i}\rLength = {length}\rlength = {length}\rstart = {start}");
+                                if (i < 0)
+                                {
+                                    break;
+                                }
+
+                                rtb.Find(word, start, length, RichTextBoxFinds.WholeWord);
+
+                                rtb.SelectionFont = new Font(rtb.Font, FontStyle.Bold);
+                                rtb.SelectionColor = Color.Yellow;
+
+                                i += word.Length;
+                            }
+                        }
+                    }
+                    rtb.SelectionLength = 0;
+                    rtb.SelectionStart = length;
+                }
+            }
 
         }
 
@@ -784,35 +850,75 @@ namespace SimpleNotepadPlus
         /// Изменение цвета кода
         /// </summary>
         /// <param name="child"></param>
-        private void ColorizeCode(SNP_EditorForm child)
-        {
-            child.editorRtb.BackColor = Color.Blue;
-            child.editorRtb.ForeColor = Color.White;
+        //private void ColorizeCode(SNP_EditorForm child)
+        //{
+        //    if (child != null)
+        //    {
+        //        if (te_tscb_editorStyle.SelectedIndex == 1)
+        //        {
+        //            ColorizeProcess(1, child.editorRtb);
+        //        }
+        //        else
+        //        {
+        //            child.editorRtb.BackColor = Color.White;
+        //            child.editorRtb.ForeColor = Color.Black;
+        //            child.editorRtb.SelectionFont = new Font(child.editorRtb.Font, FontStyle.Regular);
+        //        }
+        //    }
+        //}
 
-            int textLength = child.editorRtb.Text.Length;
+        private void ColorizeProcess(int state, RichTextBox rtb)
+        {
+            Color text = Color.Blue;
+            Color background = Color.Blue;
+            Color code = Color.Blue;
+            Font font = null;
+
+            switch (state)
+            {
+                case 1: //если перекрашиваем редактор при стандартной схеме
+                    code = Color.Black;
+                    text = Color.Black;
+                    background = Color.White;
+                    font = new Font(rtb.Font, FontStyle.Regular);
+                    break;
+                case 2: //если перекрашиваем редактор при схеме кода
+                    code = Color.Yellow;
+                    text = Color.White;
+                    background = Color.Blue;
+                    font = new Font(rtb.Font, FontStyle.Bold);
+                    break;
+            }
+
+            rtb.BackColor = background;
+            rtb.ForeColor = text;
+
+            int textLength = rtb.Text.Length;
 
             foreach (string word in dictionary)
             {
-
                 int i = 0;
-                
+
                 while (i <= textLength - word.Length)
                 {
-                    i = child.editorRtb.Text.IndexOf(word, i);
+                    i = rtb.Text.IndexOf(word, i);
 
-                    if (i < 0) break;
+                    if (i < 0)
+                    {
+                        break;
+                    }
 
-                    child.editorRtb.Find(word, i, textLength, RichTextBoxFinds.WholeWord);
+                    rtb.Find(word, i, textLength, RichTextBoxFinds.WholeWord);
 
-                    child.editorRtb.SelectionFont = new Font(child.editorRtb.Font, FontStyle.Bold);
-                    child.editorRtb.SelectionColor = Color.Yellow;
+                    rtb.SelectionFont = font;
+                    rtb.SelectionColor = code;
 
                     i += word.Length;
                 }
             }
 
-            child.editorRtb.SelectionLength = 0;
-            child.editorRtb.SelectionStart = 0;
+            rtb.SelectionLength = 0;
+            rtb.SelectionStart = 0;
         }
 
         /// <summary>

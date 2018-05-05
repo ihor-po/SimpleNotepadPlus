@@ -18,8 +18,6 @@ namespace SimpleNotepadPlus
 
         public string filePath { get; set; } = "";
 
-        public bool isCode;
-
         public SNP_EditorForm()
         {
             InitializeComponent();
@@ -30,5 +28,7 @@ namespace SimpleNotepadPlus
         {
             editorRtb = snpe_rtb;
         }
+
+        
     }
 }

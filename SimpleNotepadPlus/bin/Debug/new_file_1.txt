@@ -1,1 +1,10 @@
+using sistem;
+
+string{}
+string[]
+
+protected void BlaBlaBla()
+{
+trat tat tat t tat tat 
+}
 12312312312312323123
