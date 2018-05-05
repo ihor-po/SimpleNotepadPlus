@@ -94,9 +94,18 @@ namespace TextEditor
             te_menu_cascade.Click += Te_menu_cascade_Click;
             te_menu_reorgAll.Click += Te_menu_reorgAll_Click;
 
+            te_menu_delete.Click += Te_menu_delete_Click;
+            te_tsb_delete.Click += Te_menu_delete_Click;
+
+            te_menu_dateTime.Click += Te_menu_dateTime_Click;
+            te_tsb_dateTime.Click += Te_menu_dateTime_Click;
+
             this.WindowState = FormWindowState.Maximized;
            
         }
+
+
+
 
         /// <summary>
         /// Переопределение события формы при активировании дочернего окна
@@ -202,16 +211,6 @@ namespace TextEditor
 
         #endregion
 
-        /// <summary>
-        /// Завершение работы
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Te_menu_exit_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
         #region Settings
         /// <summary>
         /// Изменение цвета фона
@@ -260,6 +259,19 @@ namespace TextEditor
         #endregion
 
         #region Edit
+
+        /// <summary>
+        /// Вставляе текущую дату и время в позицию курсора
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Te_menu_dateTime_Click(object sender, EventArgs e)
+        {
+            SNP_EditorForm child = this.ActiveMdiChild as SNP_EditorForm;
+
+            child.editorRtb.SelectedText = DateTime.Now.ToString();
+        }
+
         /// <summary>
         /// Выбрать все в окне редактора
         /// </summary>
@@ -267,8 +279,64 @@ namespace TextEditor
         /// <param name="e"></param>
         private void Te_menu_selectAll_Click(object sender, EventArgs e)
         {
-            te_rtb_editor.Focus();
-            te_rtb_editor.SelectAll();
+            SNP_EditorForm child = this.ActiveMdiChild as SNP_EditorForm;
+
+            child.editorRtb.Focus();
+            child.editorRtb.SelectAll();
+        }
+
+        /// <summary>
+        /// Удалить выбраный фрагмент
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Te_menu_delete_Click(object sender, EventArgs e)
+        {
+            SNP_EditorForm child = this.ActiveMdiChild as SNP_EditorForm;
+
+            child.editorRtb.SelectedText = "";
+        }
+
+        /// <summary>
+        /// Вставить скопированный фрагмент
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Te_menu_insert_Click(object sender, EventArgs e)
+        {
+            SNP_EditorForm child = this.ActiveMdiChild as SNP_EditorForm;
+
+            child.editorRtb.Paste();
+        }
+
+        /// <summary>
+        /// Копирование выделенного фрагмента
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Te_menu_copy_Click(object sender, EventArgs e)
+        {
+            SNP_EditorForm child = this.ActiveMdiChild as SNP_EditorForm;
+
+            if (child.editorRtb.SelectionLength > 0)
+            {
+                child.editorRtb.Copy();
+            }
+        }
+
+        /// <summary>
+        /// Вырезать выделенный фрагмент
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Te_menu_cut_Click(object sender, EventArgs e)
+        {
+            SNP_EditorForm child = this.ActiveMdiChild as SNP_EditorForm;
+
+            if (child.editorRtb.SelectionLength > 0)
+            {
+                child.editorRtb.Cut();
+            }
         }
 
         /// <summary>
@@ -278,11 +346,13 @@ namespace TextEditor
         /// <param name="e"></param>
         private void Te_menu_redo_Click(object sender, EventArgs e)
         {
-            if (te_rtb_editor.CanRedo == true)
+            SNP_EditorForm child = this.ActiveMdiChild as SNP_EditorForm;
+
+            if (child.editorRtb.CanRedo == true)
             {
-                if (te_rtb_editor.RedoActionName != "Delete")
+                if (child.editorRtb.RedoActionName != "Delete")
                 {
-                    te_rtb_editor.Redo();
+                    child.editorRtb.Redo();
                 }
             }
         }
@@ -294,77 +364,16 @@ namespace TextEditor
         /// <param name="e"></param>
         private void Te_menu_undo_Click(object sender, EventArgs e)
         {
-            if (te_rtb_editor.CanUndo == true)
+            SNP_EditorForm child = this.ActiveMdiChild as SNP_EditorForm;
+
+            if (child.editorRtb.CanUndo == true)
             {
-                te_rtb_editor.Undo();
-                te_rtb_editor.ClearUndo();
-            }
-        }
-
-        /// <summary>
-        /// Вставить скопированный фрагмент
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Te_menu_insert_Click(object sender, EventArgs e)
-        {
-            te_rtb_editor.Paste();
-        }
-
-        /// <summary>
-        /// Вырезать выделенный фрагмент
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Te_menu_cut_Click(object sender, EventArgs e)
-        {
-            if (te_rtb_editor.SelectionLength > 0)
-            {
-                te_rtb_editor.Cut();
-            }
-        }
-
-        /// <summary>
-        /// Копирование выделенного фрагмента
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Te_menu_copy_Click(object sender, EventArgs e)
-        {
-            if (te_rtb_editor.SelectionLength > 0)
-            { 
-                te_rtb_editor.Copy();
+                child.editorRtb.Undo();
             }
         }
         #endregion
 
-        /// <summary>
-        /// Обработка измениения выделения в редакторе
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Te_rtb_editor_SelectionChanged(object sender, EventArgs e)
-        {
-            if (((RichTextBox)sender).SelectionLength > 0)
-            {
-                te_menu_copy.Enabled = true;
-                te_menu_cut.Enabled = true;
-                te_tsb_copy.Enabled = true;
-                te_tsb_cut.Enabled = true;
-                te_cm_copy.Enabled = true;
-                te_cm_cut.Enabled = true;
-            }
-            else
-            {
-                te_menu_copy.Enabled = false;
-                te_menu_cut.Enabled = false;
-                te_tsb_copy.Enabled = false;
-                te_tsb_cut.Enabled = false;
-                te_cm_copy.Enabled = false;
-                te_cm_cut.Enabled = false;
-            }
-        }
-
+        #region File
         /// <summary>
         /// Сохранить файл как ...
         /// </summary>
@@ -375,7 +384,7 @@ namespace TextEditor
             if (this.ActiveMdiChild != null)
             {
                 SNP_EditorForm child = this.ActiveMdiChild as SNP_EditorForm;
-                
+
 
                 SaveFileDialog sfd = new SaveFileDialog();
 
@@ -401,7 +410,22 @@ namespace TextEditor
 
 
             }
-            
+
+        }
+
+        /// <summary>
+        /// Сохранение файла
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Te_menu_saveFile_Click(object sender, EventArgs e)
+        {
+            if (this.ActiveMdiChild != null)
+            {
+                SNP_EditorForm child = this.ActiveMdiChild as SNP_EditorForm;
+                File.WriteAllText(child.filePath, child.editorRtb.Text);
+            }
+
         }
 
         /// <summary>
@@ -421,38 +445,7 @@ namespace TextEditor
                     EnableDisableElements(false);
                 }
             }
-            
-        }
 
-        /// <summary>
-        /// Событие изменения текста в редакторе
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Te_rtb_editor_TextChanged(object sender, EventArgs e)
-        {
-            RichTextBox rtb = sender as RichTextBox;
-
-            Point cPosition = GetCursorPosition(rtb);
-
-            te_sb_quantity.Text = QUANTITY + rtb.TextLength.ToString();
-            te_sbl_line.Text = LINE + cPosition.X.ToString();
-            te_sbl_position.Text = POSITION + cPosition.Y.ToString();
-        }
-
-        /// <summary>
-        /// Сохранение файла
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Te_menu_saveFile_Click(object sender, EventArgs e)
-        {
-            if (this.ActiveMdiChild != null)
-            {
-                SNP_EditorForm child = this.ActiveMdiChild as SNP_EditorForm;
-                File.WriteAllText(child.filePath, child.editorRtb.Text);
-            }
-            
         }
 
         /// <summary>
@@ -515,7 +508,7 @@ namespace TextEditor
 
 
                 SNP_EditorForm editor = new SNP_EditorForm();
-                
+
                 //Подписка на события
                 editor.editorRtb.SelectionChanged += Te_rtb_editor_SelectionChanged;
                 editor.editorRtb.TextChanged += Te_rtb_editor_TextChanged;
@@ -534,6 +527,72 @@ namespace TextEditor
 
                 EnableDisableElements(true);
             }
+        }
+
+        /// <summary>
+        /// Завершение работы
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Te_menu_exit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Обработка измениения выделения в редакторе
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Te_rtb_editor_SelectionChanged(object sender, EventArgs e)
+        {
+            if (((RichTextBox)sender).SelectionLength > 0)
+            {
+                te_menu_copy.Enabled = true;
+                te_menu_cut.Enabled = true;
+                te_menu_delete.Enabled = true;
+                
+
+                te_tsb_copy.Enabled = true;
+                te_tsb_cut.Enabled = true;
+                te_tsb_delete.Enabled = true;
+
+                te_cm_copy.Enabled = true;
+                te_cm_cut.Enabled = true;
+                
+            }
+            else
+            {
+                te_menu_copy.Enabled = false;
+                te_menu_cut.Enabled = false;
+                te_menu_delete.Enabled = false;
+                
+
+                te_tsb_copy.Enabled = false;
+                te_tsb_cut.Enabled = false;
+                te_tsb_delete.Enabled = false;
+
+                te_cm_copy.Enabled = false;
+                te_cm_cut.Enabled = false;
+            }
+        }
+
+        /// <summary>
+        /// Событие изменения текста в редакторе
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Te_rtb_editor_TextChanged(object sender, EventArgs e)
+        {
+            RichTextBox rtb = sender as RichTextBox;
+
+            Point cPosition = GetCursorPosition(rtb);
+
+            te_sb_quantity.Text = QUANTITY + rtb.TextLength.ToString();
+            te_sbl_line.Text = LINE + cPosition.X.ToString();
+            te_sbl_position.Text = POSITION + cPosition.Y.ToString();
         }
 
         /// <summary>
@@ -557,19 +616,19 @@ namespace TextEditor
         private void EnableDisableElements(bool status)
         {
             te_menu_saveFile.Enabled = status;
-            te_tsb_save.Enabled = status;
-            te_rtb_editor.Enabled = status;
             te_menu_closeFile.Enabled = status;
             te_menu_saveAs.Enabled = status;
-
+            te_menu_dateTime.Enabled = status;
             te_menu_undo.Enabled = status;
             te_menu_redo.Enabled = status;
             te_menu_insert.Enabled = status;
             te_menu_selectAll.Enabled = status;
 
+            te_tsb_save.Enabled = status;
             te_tsb_undo.Enabled = status;
             te_tsb_redo.Enabled = status;
             te_tsb_insert.Enabled = status;
+            te_tsb_dateTime.Enabled = status;
 
             te_cm_undo.Enabled = status;
             te_cm_redo.Enabled = status;
@@ -578,7 +637,6 @@ namespace TextEditor
             if (!status)
             {
                 te_sb_path.Text = PATH;
-                this.Text = TITLE;
             }
         }
     }
