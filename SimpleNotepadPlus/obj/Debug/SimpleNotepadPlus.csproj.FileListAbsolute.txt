@@ -1,0 +1,11 @@
+\\Mac\iCloud\Step\WinForms\SimpleNotepadPlus\SimpleNotepadPlus\bin\Debug\TextEditor.exe.config
+\\Mac\iCloud\Step\WinForms\SimpleNotepadPlus\SimpleNotepadPlus\bin\Debug\TextEditor.exe
+\\Mac\iCloud\Step\WinForms\SimpleNotepadPlus\SimpleNotepadPlus\bin\Debug\TextEditor.pdb
+\\Mac\iCloud\Step\WinForms\SimpleNotepadPlus\SimpleNotepadPlus\obj\Debug\SimpleNotepadPlus.csprojResolveAssemblyReference.cache
+\\Mac\iCloud\Step\WinForms\SimpleNotepadPlus\SimpleNotepadPlus\obj\Debug\TextEditor.Properties.Resources.resources
+\\Mac\iCloud\Step\WinForms\SimpleNotepadPlus\SimpleNotepadPlus\obj\Debug\SimpleNotepadPlus.csproj.GenerateResource.Cache
+\\Mac\iCloud\Step\WinForms\SimpleNotepadPlus\SimpleNotepadPlus\obj\Debug\SimpleNotepadPlus.csproj.CoreCompileInputs.cache
+\\Mac\iCloud\Step\WinForms\SimpleNotepadPlus\SimpleNotepadPlus\obj\Debug\TextEditor.exe
+\\Mac\iCloud\Step\WinForms\SimpleNotepadPlus\SimpleNotepadPlus\obj\Debug\TextEditor.pdb
+\\Mac\iCloud\Step\WinForms\SimpleNotepadPlus\SimpleNotepadPlus\obj\Debug\TextEditor.te_form.resources
+\\Mac\iCloud\Step\WinForms\SimpleNotepadPlus\SimpleNotepadPlus\obj\Debug\TextEditor.SNP_EditorForm.resources
