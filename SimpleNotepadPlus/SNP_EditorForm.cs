@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace TextEditor
+namespace SimpleNotepadPlus
 {
     public partial class SNP_EditorForm : Form
     {

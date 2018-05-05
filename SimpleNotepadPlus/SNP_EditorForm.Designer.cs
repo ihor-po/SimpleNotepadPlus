@@ -1,4 +1,4 @@
-﻿namespace TextEditor
+﻿namespace SimpleNotepadPlus
 {
     partial class SNP_EditorForm
     {
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SNP_EditorForm));
             this.snpe_rtb = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
@@ -47,6 +48,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(613, 457);
             this.Controls.Add(this.snpe_rtb);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SNP_EditorForm";
             this.Text = "SNP_EditorForm";
             this.ResumeLayout(false);

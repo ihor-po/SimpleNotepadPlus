@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace TextEditor
+namespace SimpleNotepadPlus
 {
     public partial class te_form : Form
     {
@@ -100,8 +100,51 @@ namespace TextEditor
             te_menu_dateTime.Click += Te_menu_dateTime_Click;
             te_tsb_dateTime.Click += Te_menu_dateTime_Click;
 
+            te_menu_find.Click += Te_menu_find_Click;
+            te_tsb_search.Click += Te_menu_find_Click;
+            te_menu_replace.Click += Te_menu_find_Click;
+            te_tsb_replace.Click += Te_menu_find_Click;
+
             this.WindowState = FormWindowState.Maximized;
            
+        }
+
+        private void Te_menu_find_Click(object sender, EventArgs e)
+        {
+            string srch = "";
+            string rplc = "";
+
+            SNP_EditorForm child = this.ActiveMdiChild as SNP_EditorForm;
+
+            if (sender.ToString() == "Найти")
+            {
+                SNP_searchForm sForm = new SNP_searchForm(false);
+
+                if (sForm.ShowDialog() == DialogResult.OK)
+                {
+                    srch = sForm.SearchText;
+                }
+
+                if (child.editorRtb.Find(srch) == -1)
+                {
+                    SNPMessage("Искомый текст не найден", false);
+                }
+            }
+            else
+            {
+                SNP_searchForm sForm = new SNP_searchForm(true);
+
+                if (sForm.ShowDialog() == DialogResult.OK)
+                {
+                    srch = sForm.SearchText;
+                    rplc = sForm.ReplaceText;
+                }
+
+                while (child.editorRtb.Find(srch) != -1)
+                {
+                    child.editorRtb.SelectedText = rplc;
+                }
+            }
         }
 
 
@@ -610,6 +653,23 @@ namespace TextEditor
         }
 
         /// <summary>
+        /// Вывод сообщения
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <param name="isError"></param>
+        private void SNPMessage(string msg, bool isError)
+        {
+            if (isError)
+            {
+                MessageBox.Show(msg, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                MessageBox.Show(msg, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        /// <summary>
         /// Включение/выключение элементов
         /// </summary>
         /// <param name="status"></param>
@@ -623,12 +683,16 @@ namespace TextEditor
             te_menu_redo.Enabled = status;
             te_menu_insert.Enabled = status;
             te_menu_selectAll.Enabled = status;
+            te_menu_find.Enabled = status;
+            te_menu_replace.Enabled = status;
 
             te_tsb_save.Enabled = status;
             te_tsb_undo.Enabled = status;
             te_tsb_redo.Enabled = status;
             te_tsb_insert.Enabled = status;
             te_tsb_dateTime.Enabled = status;
+            te_tsb_search.Enabled = status;
+            te_tsb_replace.Enabled = status;
 
             te_cm_undo.Enabled = status;
             te_cm_redo.Enabled = status;
