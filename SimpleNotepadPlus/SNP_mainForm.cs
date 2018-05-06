@@ -129,31 +129,15 @@ namespace SimpleNotepadPlus
 
             te_menu_ukr.Click += Te_menu_ukr_Click;
             te_tsb_ukr.Click += Te_menu_ukr_Click;
+            te_menu_rus.Click += Te_menu_ukr_Click;
+            te_tsb_rus.Click += Te_menu_ukr_Click;
 
             te_tscb_editorStyle.SelectedIndex = 0;
 
+            TraslateNotepad(1);
             this.WindowState = FormWindowState.Maximized;
            
         }
-        
-        /// <summary>
-        /// Выбор языка
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Te_menu_ukr_Click(object sender, EventArgs e)
-        {
-            switch(sender.ToString())
-            {
-                case "Українська":
-                    TraslateNotepad(1);
-                    break;
-                case "Русский":
-                    TraslateNotepad(1);
-                    break;
-            }
-        }
-
 
         #region MDIWindow
 
@@ -265,6 +249,24 @@ namespace SimpleNotepadPlus
         #endregion
 
         #region Settings
+
+        /// <summary>
+        /// Выбор языка
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Te_menu_ukr_Click(object sender, EventArgs e)
+        {
+            switch (sender.ToString())
+            {
+                case "Українська":
+                    TraslateNotepad(1);
+                    break;
+                case "Русский":
+                    TraslateNotepad(2);
+                    break;
+            }
+        }
 
         /// <summary>
         /// Обработка выбора стиля редактора
@@ -663,10 +665,10 @@ namespace SimpleNotepadPlus
                 {
                     
                     editor.Enabled = false;
-
-                    te_tscb_editorStyle.SelectedIndex = 1;
+                    
                     ColorizeProcess(2, editor.editorRtb);
 
+                    te_tscb_editorStyle.SelectedIndex = 1;
                     editor.Enabled = true;
                 }
                 else
@@ -819,56 +821,56 @@ namespace SimpleNotepadPlus
             te_sbl_line.Text = LINE + cPosition.X.ToString();
             te_sbl_position.Text = POSITION + cPosition.Y.ToString();
 
-            if (te_tscb_editorStyle.SelectedIndex == 1)
-            {
-                if (rtb.Text[rtb.Text.Length - 1] == ' ' ||
-                    rtb.Text[rtb.Text.Length - 1] == ',' ||
-                    rtb.Text[rtb.Text.Length - 1] == ';' ||
-                    rtb.Text[rtb.Text.Length - 1] == '(' ||
-                    rtb.Text[rtb.Text.Length - 1] == ')' ||
-                    rtb.Text[rtb.Text.Length - 1] == '[' ||
-                    rtb.Text[rtb.Text.Length - 1] == ']' ||
-                    rtb.Text[rtb.Text.Length - 1] == '!' ||
-                    rtb.Text[rtb.Text.Length - 1] == '{' ||
-                    rtb.Text[rtb.Text.Length - 1] == '}' ||
-                    rtb.Text[rtb.Text.Length - 1] == ':' ||
-                    rtb.Text[rtb.Text.Length - 1] == '\r'||
-                    rtb.Text[rtb.Text.Length - 1] == '\n'
-                    )
-                {
-                    int start = rtb.Text.Length - cPosition.Y;
-                    int length = rtb.Text.Length;
+            //if (te_tscb_editorStyle.SelectedIndex == 1)
+            //{
+            //    if (rtb.Text[rtb.Text.Length - 1] == ' ' ||
+            //        rtb.Text[rtb.Text.Length - 1] == ',' ||
+            //        rtb.Text[rtb.Text.Length - 1] == ';' ||
+            //        rtb.Text[rtb.Text.Length - 1] == '(' ||
+            //        rtb.Text[rtb.Text.Length - 1] == ')' ||
+            //        rtb.Text[rtb.Text.Length - 1] == '[' ||
+            //        rtb.Text[rtb.Text.Length - 1] == ']' ||
+            //        rtb.Text[rtb.Text.Length - 1] == '!' ||
+            //        rtb.Text[rtb.Text.Length - 1] == '{' ||
+            //        rtb.Text[rtb.Text.Length - 1] == '}' ||
+            //        rtb.Text[rtb.Text.Length - 1] == ':' ||
+            //        rtb.Text[rtb.Text.Length - 1] == '\r'||
+            //        rtb.Text[rtb.Text.Length - 1] == '\n'
+            //        )
+            //    {
+            //        int start = rtb.Text.Length - cPosition.Y;
+            //        int length = rtb.Text.Length;
 
-                    foreach (string word in dictionary)
-                    {
-                        int i = 0;
+            //        foreach (string word in dictionary)
+            //        {
+            //            int i = 0;
 
-                        int res = length - word.Length;
+            //            int res = length - word.Length;
 
-                        if (res > 0)
-                        {
-                            while (i <= res)
-                            {
-                                i = rtb.Text.IndexOf(word, i);
+            //            if (res > 0)
+            //            {
+            //                while (i <= res)
+            //                {
+            //                    i = rtb.Text.IndexOf(word, i);
 
-                                if (i < 0)
-                                {
-                                    break;
-                                }
+            //                    if (i < 0)
+            //                    {
+            //                        break;
+            //                    }
 
-                                rtb.Find(word, start, length, RichTextBoxFinds.WholeWord);
+            //                    rtb.Find(word, start, length, RichTextBoxFinds.WholeWord);
 
-                                rtb.SelectionFont = new Font(rtb.Font, FontStyle.Bold);
-                                rtb.SelectionColor = Color.Yellow;
+            //                    rtb.SelectionFont = new Font(rtb.Font, FontStyle.Bold);
+            //                    rtb.SelectionColor = Color.Yellow;
 
-                                i += word.Length;
-                            }
-                        }
-                    }
-                    rtb.SelectionLength = 0;
-                    rtb.SelectionStart = length;
-                }
-            }
+            //                    i += word.Length;
+            //                }
+            //            }
+            //        }
+            //        rtb.SelectionLength = 0;
+            //        rtb.SelectionStart = length;
+            //    }
+            //}
         }
 
         /// <summary>
@@ -1047,7 +1049,57 @@ namespace SimpleNotepadPlus
                     te_menu_uncomment.Text = "Розкоментувати";
 
                     te_menu_settings.Text = "&Налаштування";
+                    te_menu_font.Text = "Шрифт";
+                    te_menu_fontColor.Text = "Колір шрифту";
+                    te_menu_backgroundColor.Text = "Колір фону";
+                    te_menu_languages.Text = "Мова інтерфейсу";
 
+                    te_menu_window.Text = "&Вікно";
+                    te_menu_cascade.Text = "Каскад";
+                    te_menu_horizontal.Text = "Горизонтально";
+                    te_menu_vertical.Text = "Вертикально";
+                    te_menu_reorgAll.Text = "Реорганізувати";
+                    te_menu_minAll.Text = "Згорнути всі";
+                    te_menu_normalAll.Text = "Розгорнути всі";
+                    te_menu_closeAll.Text = "Закрити всі";
+
+                    te_menu_help.Text = "&Допомога";
+                    te_menu_about.Text = "Про програму";
+
+                    te_tsb_newFile.Text = "Новий файл";
+                    te_tsb_open.Text = "Відкрити файл";
+                    te_tsb_save.Text = "Зберегти файл";
+                    te_tsb_undo.Text = "Відміна";
+                    te_tsb_undo.Text = "Повернути";
+                    te_tsb_cut.Text = "Вирізати";
+                    te_tsb_copy.Text = "Копіювати";
+                    te_tsb_insert.Text = "Вставити";
+                    te_tsb_delete.Text = "Видалити";
+                    te_tsb_dateTime.Text = "Втавити дату та час";
+                    te_tsb_search.Text = "Знайти";
+                    te_tsb_replace.Text = "Замінити";
+                    te_tsb_comment.Text = "Коментувати";
+                    te_tsb_uncomment.Text = "Розкоментувати";
+                    te_tsb_font.Text = "Шрифт";
+                    te_tsb_fontColor.Text = "Колір шрифту";
+                    te_tsb_backColor.Text = "Колір фону";
+
+                    te_tsl_editor.Text = "Редактор";
+                    te_tscb_editorStyle.Items[0] = "Звичайний";
+                    te_tscb_editorStyle.Items[1] = "Коду";
+
+                    te_cm_undo.Text = "Відміна";
+                    te_cm_undo.Text = "Повернути";
+                    te_cm_cut.Text = "Вирізати";
+                    te_cm_copy.Text = "Копіювати";
+                    te_cm_insert.Text = "Вставити";
+                    te_cm_delete.Text = "Видалити";
+                    te_cm_dateTime.Text = "Втавити дату та час";
+                    te_cm_search.Text = "Знайти";
+                    te_cm_replace.Text = "Замінити";
+                    te_cm_selectAll.Text = "Вибрати все";
+                    te_cm_comment.Text = "Коментувати";
+                    te_ce_uncomment.Text = "Розкоментувати";
 
                     break;
                 case 2:
@@ -1057,6 +1109,81 @@ namespace SimpleNotepadPlus
                     te_menu_rus.Enabled = false;
                     te_tsb_ukr.Enabled = true;
                     te_tsb_rus.Enabled = false;
+
+                    te_menu_file.Text = "&Файл";
+                    te_menu_newFile.Text = "Новый файл";
+                    te_menu_openFile.Text = "Открыть файл";
+                    te_menu_saveFile.Text = "Сохранить файл";
+                    te_menu_saveAs.Text = "Сохранить как ...";
+                    te_menu_closeFile.Text = "Закрыть файл";
+                    te_menu_exit.Text = "Выход";
+
+                    te_menu_edit.Text = "&Вставка";
+                    te_menu_undo.Text = "Отмена";
+                    te_menu_undo.Text = "Вернуть";
+                    te_menu_cut.Text = "Вырезать";
+                    te_menu_copy.Text = "Копировать";
+                    te_menu_insert.Text = "Вставить";
+                    te_menu_delete.Text = "Удалить";
+                    te_menu_dateTime.Text = "Вставить дату та час";
+                    te_menu_find.Text = "Найти";
+                    te_menu_replace.Text = "Заменить";
+                    te_menu_selectAll.Text = "Выбрать все";
+                    te_menu_comment.Text = "Комментировать";
+                    te_menu_uncomment.Text = "Раскомментировать";
+
+                    te_menu_settings.Text = "&Настройки";
+                    te_menu_font.Text = "Шрифт";
+                    te_menu_fontColor.Text = "Цвет шрифта";
+                    te_menu_backgroundColor.Text = "Цвет фона";
+                    te_menu_languages.Text = "Язык интерфейса";
+
+                    te_menu_window.Text = "&Окно";
+                    te_menu_cascade.Text = "Каскад";
+                    te_menu_horizontal.Text = "Горизонтально";
+                    te_menu_vertical.Text = "Вертикально";
+                    te_menu_reorgAll.Text = "Реорганизовать";
+                    te_menu_minAll.Text = "Свернуть все";
+                    te_menu_normalAll.Text = "Развернуть все";
+                    te_menu_closeAll.Text = "Закрыть все";
+
+                    te_menu_help.Text = "&Помощь";
+                    te_menu_about.Text = "О программе";
+
+                    te_tsb_newFile.Text = "Новый файл";
+                    te_tsb_open.Text = "Открыть файл";
+                    te_tsb_save.Text = "Сохранить файл";
+                    te_tsb_undo.Text = "Отмена";
+                    te_tsb_undo.Text = "Вернуть";
+                    te_tsb_cut.Text = "Вырезать";
+                    te_tsb_copy.Text = "Корировать";
+                    te_tsb_insert.Text = "Вставить";
+                    te_tsb_delete.Text = "Удалить";
+                    te_tsb_dateTime.Text = "Вставить дату и время";
+                    te_tsb_search.Text = "Найти";
+                    te_tsb_replace.Text = "Заменить";
+                    te_tsb_comment.Text = "Комментировать";
+                    te_tsb_uncomment.Text = "Раскомментировать";
+                    te_tsb_font.Text = "Шрифт";
+                    te_tsb_fontColor.Text = "Цвет шрифта";
+                    te_tsb_backColor.Text = "Цвет фона";
+
+                    te_tsl_editor.Text = "Редактор";
+                    te_tscb_editorStyle.Items[0] = "Обычный";
+                    te_tscb_editorStyle.Items[1] = "Кода";
+
+                    te_cm_undo.Text = "Отмена";
+                    te_cm_undo.Text = "Вернуть";
+                    te_cm_cut.Text = "Вырезать";
+                    te_cm_copy.Text = "Копировать";
+                    te_cm_insert.Text = "Вставить";
+                    te_cm_delete.Text = "Удалить";
+                    te_cm_dateTime.Text = "Вставить дату и время";
+                    te_cm_search.Text = "Найти";
+                    te_cm_replace.Text = "Заменить";
+                    te_cm_selectAll.Text = "Выделить все";
+                    te_cm_comment.Text = "Комментировать";
+                    te_ce_uncomment.Text = "Раскомментировать";
                     break;
             }
         }

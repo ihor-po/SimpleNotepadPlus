@@ -66,7 +66,7 @@
             this.te_menu_languages = new System.Windows.Forms.ToolStripMenuItem();
             this.te_menu_ukr = new System.Windows.Forms.ToolStripMenuItem();
             this.te_menu_rus = new System.Windows.Forms.ToolStripMenuItem();
-            this.окноToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.te_menu_window = new System.Windows.Forms.ToolStripMenuItem();
             this.te_menu_cascade = new System.Windows.Forms.ToolStripMenuItem();
             this.te_menu_horizontal = new System.Windows.Forms.ToolStripMenuItem();
             this.te_menu_vertical = new System.Windows.Forms.ToolStripMenuItem();
@@ -103,7 +103,7 @@
             this.te_tsb_fontColor = new System.Windows.Forms.ToolStripButton();
             this.te_tsb_backColor = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.te_tsl_editor = new System.Windows.Forms.ToolStripLabel();
             this.te_tscb_editorStyle = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.te_tsb_ukr = new System.Windows.Forms.ToolStripButton();
@@ -126,6 +126,8 @@
             this.toolStripMenuItem14 = new System.Windows.Forms.ToolStripSeparator();
             this.te_cm_comment = new System.Windows.Forms.ToolStripMenuItem();
             this.te_ce_uncomment = new System.Windows.Forms.ToolStripMenuItem();
+            this.te_menu_help = new System.Windows.Forms.ToolStripMenuItem();
+            this.te_menu_about = new System.Windows.Forms.ToolStripMenuItem();
             this.te_menu.SuspendLayout();
             this.te_statusBar.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -138,7 +140,8 @@
             this.te_menu_file,
             this.te_menu_edit,
             this.te_menu_settings,
-            this.окноToolStripMenuItem});
+            this.te_menu_window,
+            this.te_menu_help});
             this.te_menu.Location = new System.Drawing.Point(0, 0);
             this.te_menu.Name = "te_menu";
             this.te_menu.Size = new System.Drawing.Size(988, 24);
@@ -440,9 +443,9 @@
             this.te_menu_rus.Size = new System.Drawing.Size(152, 22);
             this.te_menu_rus.Text = "Русский";
             // 
-            // окноToolStripMenuItem
+            // te_menu_window
             // 
-            this.окноToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.te_menu_window.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.te_menu_cascade,
             this.te_menu_horizontal,
             this.te_menu_vertical,
@@ -451,9 +454,9 @@
             this.te_menu_minAll,
             this.te_menu_normalAll,
             this.te_menu_closeAll});
-            this.окноToolStripMenuItem.Name = "окноToolStripMenuItem";
-            this.окноToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
-            this.окноToolStripMenuItem.Text = "Окно";
+            this.te_menu_window.Name = "te_menu_window";
+            this.te_menu_window.Size = new System.Drawing.Size(48, 20);
+            this.te_menu_window.Text = "Окно";
             // 
             // te_menu_cascade
             // 
@@ -570,7 +573,7 @@
             this.te_tsb_fontColor,
             this.te_tsb_backColor,
             this.toolStripSeparator5,
-            this.toolStripLabel1,
+            this.te_tsl_editor,
             this.te_tscb_editorStyle,
             this.toolStripSeparator6,
             this.te_tsb_ukr,
@@ -799,11 +802,11 @@
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(6, 26);
             // 
-            // toolStripLabel1
+            // te_tsl_editor
             // 
-            this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(77, 28);
-            this.toolStripLabel1.Text = "Редактор";
+            this.te_tsl_editor.Name = "te_tsl_editor";
+            this.te_tsl_editor.Size = new System.Drawing.Size(77, 28);
+            this.te_tsl_editor.Text = "Редактор";
             // 
             // te_tscb_editorStyle
             // 
@@ -838,7 +841,7 @@
             this.te_tsb_rus.Margin = new System.Windows.Forms.Padding(3, 0, 0, 3);
             this.te_tsb_rus.Name = "te_tsb_rus";
             this.te_tsb_rus.Size = new System.Drawing.Size(28, 28);
-            this.te_tsb_rus.Text = "toolStripButton2";
+            this.te_tsb_rus.Text = "Русский";
             // 
             // contextMenuStrip1
             // 
@@ -984,6 +987,21 @@
             this.te_ce_uncomment.Size = new System.Drawing.Size(195, 22);
             this.te_ce_uncomment.Text = "Раскомментировать";
             // 
+            // te_menu_help
+            // 
+            this.te_menu_help.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.te_menu_about});
+            this.te_menu_help.Name = "te_menu_help";
+            this.te_menu_help.Size = new System.Drawing.Size(65, 20);
+            this.te_menu_help.Text = "Справка";
+            // 
+            // te_menu_about
+            // 
+            this.te_menu_about.Image = global::SimpleNotepadPlus.Properties.Resources.about;
+            this.te_menu_about.Name = "te_menu_about";
+            this.te_menu_about.Size = new System.Drawing.Size(152, 22);
+            this.te_menu_about.Text = "О программе";
+            // 
             // te_form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
@@ -1061,7 +1079,7 @@
         private System.Windows.Forms.ToolStripMenuItem te_cm_copy;
         private System.Windows.Forms.ToolStripMenuItem te_cm_cut;
         private System.Windows.Forms.ToolStripMenuItem te_cm_insert;
-        private System.Windows.Forms.ToolStripMenuItem окноToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem te_menu_window;
         private System.Windows.Forms.ToolStripMenuItem te_menu_cascade;
         private System.Windows.Forms.ToolStripMenuItem te_menu_horizontal;
         private System.Windows.Forms.ToolStripMenuItem te_menu_vertical;
@@ -1090,7 +1108,7 @@
         private System.Windows.Forms.ToolStripMenuItem te_menu_comment;
         private System.Windows.Forms.ToolStripMenuItem te_menu_uncomment;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+        private System.Windows.Forms.ToolStripLabel te_tsl_editor;
         private System.Windows.Forms.ToolStripComboBox te_tscb_editorStyle;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem10;
         private System.Windows.Forms.ToolStripMenuItem te_menu_languages;
@@ -1110,6 +1128,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem14;
         private System.Windows.Forms.ToolStripMenuItem te_cm_comment;
         private System.Windows.Forms.ToolStripMenuItem te_ce_uncomment;
+        private System.Windows.Forms.ToolStripMenuItem te_menu_help;
+        private System.Windows.Forms.ToolStripMenuItem te_menu_about;
     }
 }
 
