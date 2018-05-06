@@ -13,11 +13,14 @@ namespace SimpleNotepadPlus
 {
     public partial class te_form : Form
     {
-        const string TITLE = "Редактор";
-        const string QUANTITY = "Колличество символов: ";
-        const string PATH = "Путь: ";
-        const string LINE = "Строка: ";
-        const string POSITION = "Позиция: ";
+        string TITLE = "Редактор";
+        string QUANTITY = "Колличество символов: ";
+        string PATH = "Путь: ";
+        string LINE = "Строка: ";
+        string POSITION = "Позиция: ";
+        string ABOUT = $"SimpleNotepadPlus - простой текстовый редактор\r" +
+                $"Да прибудет с вами истина!\r" +
+                $"Version: 1.0";
 
         string[]  dictionary = {
             "using", "namespace", "public", "private", "protected",
@@ -132,11 +135,18 @@ namespace SimpleNotepadPlus
             te_menu_rus.Click += Te_menu_ukr_Click;
             te_tsb_rus.Click += Te_menu_ukr_Click;
 
+            te_menu_about.Click += Te_menu_about_Click;
+
             te_tscb_editorStyle.SelectedIndex = 0;
 
             TraslateNotepad(1);
             this.WindowState = FormWindowState.Maximized;
            
+        }
+
+        private void Te_menu_about_Click(object sender, EventArgs e)
+        {
+            SNPMessage(ABOUT, false);
         }
 
         #region MDIWindow
@@ -821,56 +831,56 @@ namespace SimpleNotepadPlus
             te_sbl_line.Text = LINE + cPosition.X.ToString();
             te_sbl_position.Text = POSITION + cPosition.Y.ToString();
 
-            //if (te_tscb_editorStyle.SelectedIndex == 1)
-            //{
-            //    if (rtb.Text[rtb.Text.Length - 1] == ' ' ||
-            //        rtb.Text[rtb.Text.Length - 1] == ',' ||
-            //        rtb.Text[rtb.Text.Length - 1] == ';' ||
-            //        rtb.Text[rtb.Text.Length - 1] == '(' ||
-            //        rtb.Text[rtb.Text.Length - 1] == ')' ||
-            //        rtb.Text[rtb.Text.Length - 1] == '[' ||
-            //        rtb.Text[rtb.Text.Length - 1] == ']' ||
-            //        rtb.Text[rtb.Text.Length - 1] == '!' ||
-            //        rtb.Text[rtb.Text.Length - 1] == '{' ||
-            //        rtb.Text[rtb.Text.Length - 1] == '}' ||
-            //        rtb.Text[rtb.Text.Length - 1] == ':' ||
-            //        rtb.Text[rtb.Text.Length - 1] == '\r'||
-            //        rtb.Text[rtb.Text.Length - 1] == '\n'
-            //        )
-            //    {
-            //        int start = rtb.Text.Length - cPosition.Y;
-            //        int length = rtb.Text.Length;
+            if (te_tscb_editorStyle.SelectedIndex == 1)
+            {
+                if (rtb.Text[rtb.Text.Length - 1] == ' ' ||
+                    rtb.Text[rtb.Text.Length - 1] == ',' ||
+                    rtb.Text[rtb.Text.Length - 1] == ';' ||
+                    rtb.Text[rtb.Text.Length - 1] == '(' ||
+                    rtb.Text[rtb.Text.Length - 1] == ')' ||
+                    rtb.Text[rtb.Text.Length - 1] == '[' ||
+                    rtb.Text[rtb.Text.Length - 1] == ']' ||
+                    rtb.Text[rtb.Text.Length - 1] == '!' ||
+                    rtb.Text[rtb.Text.Length - 1] == '{' ||
+                    rtb.Text[rtb.Text.Length - 1] == '}' ||
+                    rtb.Text[rtb.Text.Length - 1] == ':' ||
+                    rtb.Text[rtb.Text.Length - 1] == '\r' 
 
-            //        foreach (string word in dictionary)
-            //        {
-            //            int i = 0;
+                    )
+                {
+                    int start = rtb.Text.Length - cPosition.Y;
+                    int length = rtb.Text.Length;
 
-            //            int res = length - word.Length;
+                    foreach (string word in dictionary)
+                    {
+                        int i = 0;
 
-            //            if (res > 0)
-            //            {
-            //                while (i <= res)
-            //                {
-            //                    i = rtb.Text.IndexOf(word, i);
+                        int res = length - word.Length;
 
-            //                    if (i < 0)
-            //                    {
-            //                        break;
-            //                    }
+                        if (res > 0)
+                        {
+                            while (i <= res)
+                            {
+                                i = rtb.Text.IndexOf(word, i);
 
-            //                    rtb.Find(word, start, length, RichTextBoxFinds.WholeWord);
+                                if (i < 0)
+                                {
+                                    break;
+                                }
 
-            //                    rtb.SelectionFont = new Font(rtb.Font, FontStyle.Bold);
-            //                    rtb.SelectionColor = Color.Yellow;
+                                rtb.Find(word, start, length, RichTextBoxFinds.WholeWord);
 
-            //                    i += word.Length;
-            //                }
-            //            }
-            //        }
-            //        rtb.SelectionLength = 0;
-            //        rtb.SelectionStart = length;
-            //    }
-            //}
+                                rtb.SelectionFont = new Font(rtb.Font, FontStyle.Bold);
+                                rtb.SelectionColor = Color.Yellow;
+
+                                i += word.Length;
+                            }
+                        }
+                    }
+                    rtb.SelectionLength = 0;
+                    rtb.SelectionStart = length;
+                }
+            }
         }
 
         /// <summary>
@@ -1101,6 +1111,14 @@ namespace SimpleNotepadPlus
                     te_cm_comment.Text = "Коментувати";
                     te_ce_uncomment.Text = "Розкоментувати";
 
+                    TITLE = "Редактор";
+                    QUANTITY = "Кількість символів: ";
+                    PATH = "Шлях: ";
+                    LINE = "Строка: ";
+                    POSITION = "Позиція: ";
+                    ABOUT = $"SimpleNotepadPlus - простий текстовий редактор\r" +
+                            $"Хай істина буде із вами!\r" +
+                            $"Version: 1.0\rАвтор: Поротіков Ігор @sobikashi";
                     break;
                 case 2:
                     te_menu_ukr.Checked = false;
@@ -1184,6 +1202,15 @@ namespace SimpleNotepadPlus
                     te_cm_selectAll.Text = "Выделить все";
                     te_cm_comment.Text = "Комментировать";
                     te_ce_uncomment.Text = "Раскомментировать";
+
+                    TITLE = "Редактор";
+                    QUANTITY = "Колличество символов: ";
+                    PATH = "Путь: ";
+                    LINE = "Строка: ";
+                    POSITION = "Позиция: ";
+                    ABOUT = $"SimpleNotepadPlus - простой текстовый редактор\r" +
+                            $"Да прибудет с вами истина!\r" +
+                            $"Version: 1.0\rАвтор: Поротиков Игорь @sobikashi";
                     break;
             }
         }
