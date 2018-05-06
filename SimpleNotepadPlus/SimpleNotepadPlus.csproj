@@ -175,6 +175,8 @@
   <ItemGroup>
     <None Include="Resources\comment-edit-icon.png" />
     <None Include="Resources\Comment-icon.png" />
+    <None Include="Resources\Russia-Flag-icon.png" />
+    <None Include="Resources\Ukraine-Flag-icon.png" />
     <Content Include="Text Edit.ico" />
   </ItemGroup>
   <ItemGroup>

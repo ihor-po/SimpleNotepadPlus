@@ -60,10 +60,6 @@ namespace SimpleNotepadPlus
 
             te_menu_saveAs.Click += Te_menu_saveAs_Click;
 
-            //te_rtb_editor.TextChanged += Te_rtb_editor_TextChanged;
-
-            //te_rtb_editor.SelectionChanged += Te_rtb_editor_SelectionChanged;
-
             te_menu_copy.Click += Te_menu_copy_Click;
             te_tsb_copy.Click += Te_menu_copy_Click;
             te_cm_copy.Click += Te_menu_copy_Click;
@@ -92,7 +88,7 @@ namespace SimpleNotepadPlus
             te_menu_fontColor.Click += Te_menu_fontColor_Click;
             te_tsb_fontColor.Click += Te_menu_fontColor_Click;
 
-            te_tsb_backColor.Click += Te_menu_backColor_Click;
+            te_menu_backgroundColor.Click += Te_menu_backColor_Click;
             te_tsb_backColor.Click += Te_menu_backColor_Click;
 
             te_menu_exit.Click += Te_menu_exit_Click;
@@ -107,55 +103,57 @@ namespace SimpleNotepadPlus
 
             te_menu_delete.Click += Te_menu_delete_Click;
             te_tsb_delete.Click += Te_menu_delete_Click;
+            te_cm_delete.Click += Te_menu_delete_Click;
 
             te_menu_dateTime.Click += Te_menu_dateTime_Click;
             te_tsb_dateTime.Click += Te_menu_dateTime_Click;
+            te_cm_dateTime.Click += Te_menu_dateTime_Click;
 
             te_menu_find.Click += Te_menu_find_Click;
             te_tsb_search.Click += Te_menu_find_Click;
+            te_cm_search.Click += Te_menu_find_Click;
+
             te_menu_replace.Click += Te_menu_find_Click;
             te_tsb_replace.Click += Te_menu_find_Click;
+            te_cm_replace.Click += Te_menu_find_Click;
 
             te_menu_comment.Click += Te_menu_comment_Click;
             te_tsb_comment.Click += Te_menu_comment_Click;
+            te_cm_comment.Click += Te_menu_comment_Click;
 
             te_menu_uncomment.Click += Te_menu_uncomment_Click;
             te_tsb_uncomment.Click += Te_menu_uncomment_Click;
-
+            te_ce_uncomment.Click += Te_menu_uncomment_Click;
+            
             te_tscb_editorStyle.SelectedIndexChanged += Te_tscb_editorStyle_SelectedIndexChanged;
+
+            te_menu_ukr.Click += Te_menu_ukr_Click;
+            te_tsb_ukr.Click += Te_menu_ukr_Click;
 
             te_tscb_editorStyle.SelectedIndex = 0;
 
             this.WindowState = FormWindowState.Maximized;
            
         }
-
-        private void Te_tscb_editorStyle_SelectedIndexChanged(object sender, EventArgs e)
+        
+        /// <summary>
+        /// Выбор языка
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Te_menu_ukr_Click(object sender, EventArgs e)
         {
-            ToolStripComboBox cb = sender as ToolStripComboBox;
-            SNP_EditorForm child = null;
-
-            if (this.ActiveMdiChild != null)
+            switch(sender.ToString())
             {
-                child = this.ActiveMdiChild as SNP_EditorForm;
-            }
-
-            switch(cb.SelectedIndex)
-            {
-                case 0:
-                    if (child != null)
-                    {
-                        ColorizeProcess(1, child.editorRtb);
-                    }
+                case "Українська":
+                    TraslateNotepad(1);
                     break;
-                case 1:
-                    if (child != null)
-                    {
-                        ColorizeProcess(2, child.editorRtb);
-                    }
+                case "Русский":
+                    TraslateNotepad(1);
                     break;
             }
         }
+
 
         #region MDIWindow
 
@@ -174,10 +172,15 @@ namespace SimpleNotepadPlus
                 te_sb_quantity.Text = QUANTITY + child.editorRtb.TextLength.ToString();
                 te_sbl_line.Text = LINE + cPosition.X.ToString();
                 te_sbl_position.Text = POSITION + cPosition.Y.ToString();
+                child.editorRtb.ContextMenuStrip = contextMenuStrip1;
             }
             else
             {
                 EnableDisableElements(false);
+                te_sb_path.Text = PATH;
+                te_sb_quantity.Text = QUANTITY;
+                te_sbl_line.Text = LINE;
+                te_sbl_position.Text = POSITION;
             }
         }
 
@@ -262,33 +265,76 @@ namespace SimpleNotepadPlus
         #endregion
 
         #region Settings
+
         /// <summary>
-        /// Изменение цвета фона
+        /// Обработка выбора стиля редактора
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Te_tscb_editorStyle_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ToolStripComboBox cb = sender as ToolStripComboBox;
+            SNP_EditorForm child = null;
+
+            if (this.ActiveMdiChild != null)
+            {
+                child = this.ActiveMdiChild as SNP_EditorForm;
+            }
+
+            switch (cb.SelectedIndex)
+            {
+                case 0:
+                    if (child != null)
+                    {
+                        ColorizeProcess(1, child.editorRtb);
+                    }
+                    break;
+                case 1:
+                    if (child != null)
+                    {
+                        ColorizeProcess(2, child.editorRtb);
+                    }
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Изменение цвета фона редактора
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Te_menu_backColor_Click(object sender, EventArgs e)
         {
-            ColorDialog cd = new ColorDialog();
-
-            if (cd.ShowDialog() == DialogResult.OK)
+            if (this.ActiveMdiChild != null)
             {
-                //te_rtb_editor.BackColor = cd.Color;
+                SNP_EditorForm child = this.ActiveMdiChild as SNP_EditorForm;
+
+                ColorDialog cd = new ColorDialog();
+
+                if (cd.ShowDialog() == DialogResult.OK)
+                {
+                    child.editorRtb.BackColor = cd.Color;
+                }
             }
         }
 
         /// <summary>
-        /// Изменение цвета шрифта
+        /// Изменение цвета шрифта редактора
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Te_menu_fontColor_Click(object sender, EventArgs e)
         {
-            ColorDialog cd = new ColorDialog();
-
-            if (cd.ShowDialog() == DialogResult.OK)
+            if (this.ActiveMdiChild != null)
             {
-                //te_rtb_editor.ForeColor = cd.Color;
+                SNP_EditorForm child = this.ActiveMdiChild as SNP_EditorForm;
+
+                ColorDialog cd = new ColorDialog();
+
+                if (cd.ShowDialog() == DialogResult.OK)
+                {
+                    child.editorRtb.ForeColor = cd.Color;
+                }
             }
         }
 
@@ -299,11 +345,16 @@ namespace SimpleNotepadPlus
         /// <param name="e"></param>
         private void Te_menu_font_Click(object sender, EventArgs e)
         {
-            FontDialog fd = new FontDialog();
-
-            if (fd.ShowDialog() == DialogResult.OK)
+            if (this.ActiveMdiChild != null)
             {
-               // te_rtb_editor.Font = fd.Font;
+                SNP_EditorForm child = this.ActiveMdiChild as SNP_EditorForm;
+
+                FontDialog fd = new FontDialog();
+
+                if (fd.ShowDialog() == DialogResult.OK)
+                {
+                    child.editorRtb.Font = fd.Font;
+                }
             }
         }
         #endregion
@@ -671,7 +722,6 @@ namespace SimpleNotepadPlus
                 if (editor.filePath.EndsWith("cs"))
                 {
                     te_tscb_editorStyle.SelectedIndex = 1;
-                    
                 }
 
                 EnableDisableElements(true);
@@ -710,6 +760,7 @@ namespace SimpleNotepadPlus
 
                 te_cm_copy.Enabled = true;
                 te_cm_cut.Enabled = true;
+                te_cm_delete.Enabled = true;
 
                 if (te_tscb_editorStyle.SelectedIndex == 1)
                 {
@@ -718,6 +769,9 @@ namespace SimpleNotepadPlus
 
                     te_tsb_comment.Enabled = true;
                     te_tsb_uncomment.Enabled = true;
+
+                    te_cm_comment.Enabled = true;
+                    te_ce_uncomment.Enabled = true;
                 }
                 
             }
@@ -734,6 +788,7 @@ namespace SimpleNotepadPlus
 
                 te_cm_copy.Enabled = false;
                 te_cm_cut.Enabled = false;
+                te_cm_delete.Enabled = false;
 
                 if (te_tscb_editorStyle.SelectedIndex == 1)
                 {
@@ -742,6 +797,9 @@ namespace SimpleNotepadPlus
 
                     te_tsb_comment.Enabled = false;
                     te_tsb_uncomment.Enabled = false;
+
+                    te_cm_comment.Enabled = false;
+                    te_ce_uncomment.Enabled = false;
                 }
             }
         }
@@ -774,7 +832,8 @@ namespace SimpleNotepadPlus
                     rtb.Text[rtb.Text.Length - 1] == '{' ||
                     rtb.Text[rtb.Text.Length - 1] == '}' ||
                     rtb.Text[rtb.Text.Length - 1] == ':' ||
-                    rtb.Text[rtb.Text.Length - 1] == '\r'
+                    rtb.Text[rtb.Text.Length - 1] == '\r'||
+                    rtb.Text[rtb.Text.Length - 1] == '\n'
                     )
                 {
                     int start = rtb.Text.Length - cPosition.Y;
@@ -791,9 +850,7 @@ namespace SimpleNotepadPlus
                             while (i <= res)
                             {
                                 i = rtb.Text.IndexOf(word, i);
-                               
 
-                                //MessageBox.Show(word + '\r' + $"res = {res}\ri = {i}\rLength = {length}\rlength = {length}\rstart = {start}");
                                 if (i < 0)
                                 {
                                     break;
@@ -812,7 +869,6 @@ namespace SimpleNotepadPlus
                     rtb.SelectionStart = length;
                 }
             }
-
         }
 
         /// <summary>
@@ -847,26 +903,10 @@ namespace SimpleNotepadPlus
         }
 
         /// <summary>
-        /// Изменение цвета кода
+        /// Раскрашивание кода
         /// </summary>
-        /// <param name="child"></param>
-        //private void ColorizeCode(SNP_EditorForm child)
-        //{
-        //    if (child != null)
-        //    {
-        //        if (te_tscb_editorStyle.SelectedIndex == 1)
-        //        {
-        //            ColorizeProcess(1, child.editorRtb);
-        //        }
-        //        else
-        //        {
-        //            child.editorRtb.BackColor = Color.White;
-        //            child.editorRtb.ForeColor = Color.Black;
-        //            child.editorRtb.SelectionFont = new Font(child.editorRtb.Font, FontStyle.Regular);
-        //        }
-        //    }
-        //}
-
+        /// <param name="state"></param>
+        /// <param name="rtb"></param>
         private void ColorizeProcess(int state, RichTextBox rtb)
         {
             Color text = Color.Blue;
@@ -937,6 +977,9 @@ namespace SimpleNotepadPlus
             te_menu_selectAll.Enabled = status;
             te_menu_find.Enabled = status;
             te_menu_replace.Enabled = status;
+            te_menu_font.Enabled = status;
+            te_menu_fontColor.Enabled = status;
+            te_menu_backgroundColor.Enabled = status;
 
             te_tsb_save.Enabled = status;
             te_tsb_undo.Enabled = status;
@@ -945,15 +988,78 @@ namespace SimpleNotepadPlus
             te_tsb_dateTime.Enabled = status;
             te_tsb_search.Enabled = status;
             te_tsb_replace.Enabled = status;
+            te_tsb_font.Enabled = status;
+            te_tsb_fontColor.Enabled = status;
+            te_tsb_backColor.Enabled = status;
 
             te_cm_undo.Enabled = status;
             te_cm_redo.Enabled = status;
             te_cm_insert.Enabled = status;
+            te_cm_delete.Enabled = status;
+            te_cm_dateTime.Enabled = status;
+            te_cm_search.Enabled = status;
+            te_cm_replace.Enabled = status;
+            te_cm_selectAll.Enabled = status;
+            
 
             if (!status)
             {
                 te_sb_path.Text = PATH;
             }
         }
+
+        /// <summary>
+        /// Перевод интерфейса
+        /// </summary>
+        /// <param name="lang"></param>
+        private void TraslateNotepad(int lang)
+        {
+            switch (lang)
+            {
+                case 1:
+                    te_menu_ukr.Checked = true;
+                    te_menu_rus.Checked = false;
+                    te_menu_ukr.Enabled = false;
+                    te_menu_rus.Enabled = true;
+                    te_tsb_ukr.Enabled = false;
+                    te_tsb_rus.Enabled = true;
+
+                    te_menu_file.Text = "&Файл";
+                    te_menu_newFile.Text = "Новий файл";
+                    te_menu_openFile.Text = "Відкрити файл";
+                    te_menu_saveFile.Text = "Зберегти файл";
+                    te_menu_saveAs.Text = "Зберегти як ...";
+                    te_menu_closeFile.Text = "Закрити файл";
+                    te_menu_exit.Text = "Вихід";
+
+                    te_menu_edit.Text = "&Коригування";
+                    te_menu_undo.Text = "Відміна";
+                    te_menu_undo.Text = "Повернути";
+                    te_menu_cut.Text = "Вирізати";
+                    te_menu_copy.Text = "Копіювати";
+                    te_menu_insert.Text = "Вставити";
+                    te_menu_delete.Text = "Видалити";
+                    te_menu_dateTime.Text = "Втавити дату та час";
+                    te_menu_find.Text = "Знайти";
+                    te_menu_replace.Text = "Замінити";
+                    te_menu_selectAll.Text = "Вибрати все";
+                    te_menu_comment.Text = "Коментувати";
+                    te_menu_uncomment.Text = "Розкоментувати";
+
+                    te_menu_settings.Text = "&Налаштування";
+
+
+                    break;
+                case 2:
+                    te_menu_ukr.Checked = false;
+                    te_menu_rus.Checked = true;
+                    te_menu_ukr.Enabled = true;
+                    te_menu_rus.Enabled = false;
+                    te_tsb_ukr.Enabled = true;
+                    te_tsb_rus.Enabled = false;
+                    break;
+            }
+        }
+
     }
 }

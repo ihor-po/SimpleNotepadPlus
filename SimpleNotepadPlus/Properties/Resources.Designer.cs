@@ -233,6 +233,16 @@ namespace SimpleNotepadPlus.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Russia_Flag_icon {
+            get {
+                object obj = ResourceManager.GetObject("Russia-Flag-icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap save {
             get {
                 object obj = ResourceManager.GetObject("save", resourceCulture);
@@ -256,6 +266,16 @@ namespace SimpleNotepadPlus.Properties {
         internal static System.Drawing.Bitmap Save_icon {
             get {
                 object obj = ResourceManager.GetObject("Save-icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Ukraine_Flag_icon {
+            get {
+                object obj = ResourceManager.GetObject("Ukraine-Flag-icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
